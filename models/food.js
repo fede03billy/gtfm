@@ -1,6 +1,6 @@
-const { Schema, model } = require("mongoose");
+const mongoose = require("mongoose");
 
-const foodSchema = new Schema({
+const foodSchema = new mongoose.Schema({
     name: {
        type: String,
        required: true, 
@@ -14,6 +14,10 @@ const foodSchema = new Schema({
         required: true,
     },
     restaurant_id: {
+        type: String,
+        required: true,
+    },
+    category: {
         type: String,
         required: true,
     },
@@ -48,4 +52,5 @@ const foodSchema = new Schema({
     },
 })
 
-module.exports = model("Food", foodSchema)
+// module.exports = model("Food", foodSchema) // this causes some problem with overwriting the model, this fix is from: https://nesin.io/blog/fix-mongoose-cannot-overwrite-model-once-compiled-error
+module.exports = mongoose.models.Food || mongoose.model('Food', foodSchema);

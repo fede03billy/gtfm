@@ -1,6 +1,6 @@
-const { Schema, model } = require("mongoose");
+const mongoose = require("mongoose");
 
-const restaurantSchema = new Schema({
+const restaurantSchema = new mongoose.Schema({
     name: {
        type: String,
        required: true, 
@@ -32,4 +32,5 @@ const restaurantSchema = new Schema({
     },
 })
 
-module.exports = model("Restaurant", restaurantSchema)
+// module.exports = model("Restaurant", restaurantSchema)
+module.exports = mongoose.models.Restaurant || mongoose.model('Restaurant', restaurantSchema);

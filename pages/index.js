@@ -1,7 +1,11 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
+import Categories from '../components/categories';
+import { useState } from 'react';
 
-export default function Home() {
+export default function Home(props) {
+  const { table_id, food } = props;
+
   return (
     <div className={styles.container}>
       <Head>
@@ -11,12 +15,33 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <div> MAIN </div>
+        <div> {`TAVOLO ${table_id}` /* To display the correct number of the table for the user we will find the index of the table_id in the restaurant schema's tables array */} </div>
+        <Categories food={food} />
+        <div> {food.map( (item, index) => <div key={index}> {item.name} </div> )} </div>
       </main>
-
       <footer className={styles.footer}>
         <div> FOOTER </div>
       </footer>
     </div>
   )
+}
+
+// We need a function to get the query parameter from the url and to retrieve the data from the API
+export async function getServerSideProps(context) {
+  // Get the params from the url
+  const { query } = context;
+  let restaurant_id = query.resid;
+  let table_id = query.tabid;
+
+  // Get the data from the API
+  const res = await fetch(`http://localhost:3000/api/restaurant/${restaurant_id}`)
+    .then( res => res.json() );
+
+  // Return the data as props
+  return {
+    props: {
+      table_id,
+      food: res,
+    },
+  };
 }
