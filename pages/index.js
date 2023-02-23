@@ -31,7 +31,7 @@ export default function Home(props) {
       </main>
       <footer className={styles.footer}>
         {/* button to redirect to /order */}
-        <Link href="/order" className={styles.button}>
+        <Link href="/order">
           <button
             className="bg-gray-300 py-2 px-4 rounded shadow hover:bg-gray-400 mr-1"
             onClick={() => {

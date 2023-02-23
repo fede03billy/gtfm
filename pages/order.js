@@ -2,6 +2,7 @@
 // Path: pages/order.js
 
 import { useCart, useCartUpdate } from '../components/cartContext';
+import FoodItemCart from '../components/foodItemCart';
 
 export default function Order() {
   const { cart } = useCart();
@@ -13,6 +14,8 @@ export default function Order() {
     if (cartFromSessionStorage) {
       changeCart.add2Cart(cartFromSessionStorage);
     }
+    // remove the cart from the session storage
+    sessionStorage.removeItem('cart');
   }
 
   let total = 0;
@@ -23,14 +26,7 @@ export default function Order() {
       <div className="flex flex-col">
         {cart.map((item, index) => {
           total += item.price / 100;
-          return (
-            <div key={index} className="flex justify-between">
-              <p className="text-xl">
-                {item.name} - {item.price / 100}€
-              </p>
-              {/* <p className="text-xl">{item.quantity}</p> */}
-            </div>
-          );
+          return <FoodItemCart key={index} item={item} />;
         })}
         <div className="flex justify-between">
           <p className="text-xl">Total</p>
