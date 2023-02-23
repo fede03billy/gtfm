@@ -1,12 +1,13 @@
 import Head from 'next/head';
 import styles from '../styles/Home.module.css';
 import Categories from '../components/categories';
-import { CategoriesProvider } from '../components/categoriesContext';
-import { CartProvider } from '../components/cartContext';
 import FoodList from '../components/foodList';
+import Link from 'next/link';
+import { useCart } from '../components/cartContext';
 
 export default function Home(props) {
   const { table_id, food } = props;
+  const { cart } = useCart();
 
   // in this part of the code the category provider is not initialized yet,
   // so we cannot use the context, the category is initialized in the FoodList component
@@ -20,20 +21,32 @@ export default function Home(props) {
       </Head>
 
       <main className={styles.main}>
-        <CategoriesProvider>
-          <CartProvider>
-            <div>
-              {
-                `TAVOLO ${table_id}` /* To display the correct number of the table for the user we will find the index of the table_id in the restaurant schema's tables array */
-              }
-            </div>
-            <Categories food={food} />
-            <FoodList food={food} />
-          </CartProvider>
-        </CategoriesProvider>
+        <div>
+          {
+            `TAVOLO ${table_id}` /* To display the correct number of the table for the user we will find the index of the table_id in the restaurant schema's tables array */
+          }
+        </div>
+        <Categories food={food} />
+        <FoodList food={food} />
       </main>
       <footer className={styles.footer}>
-        <div> FOOTER </div>
+        {/* button to redirect to /order */}
+        <Link href="/order" className={styles.button}>
+          <button
+            className="bg-gray-300 py-2 px-4 rounded shadow hover:bg-gray-400 mr-1"
+            onClick={() => {
+              // save the cart in the session storage
+              if (typeof window !== undefined) {
+                if (window.sessionStorage.getItem('cart')) {
+                  window.sessionStorage.removeItem('cart');
+                }
+                window.sessionStorage.setItem('cart', JSON.stringify(cart));
+              }
+            }}
+          >
+            Order
+          </button>
+        </Link>
       </footer>
     </div>
   );
