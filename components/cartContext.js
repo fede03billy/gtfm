@@ -17,11 +17,11 @@ export function CartProvider({ children }) {
   const [cart, setCart] = useState([]);
 
   function add2Cart(item) {
-    // // handle the case in wich item is an array
-    // if (Array.isArray(item)) {
-    //   setCart([...cart, ...item]);
-    //   return;
-    // }
+    // handle the case in wich item is an array
+    if (Array.isArray(item)) {
+      setCart([...cart, ...item]);
+      return;
+    }
     setCart([...cart, item]);
   }
 

@@ -3,34 +3,21 @@
 
 import { useCart, useCartUpdate } from '../components/cartContext';
 import FoodListCart from '../components/foodListCart';
-import { useMemo, useState, useEffect } from 'react';
+import { useEffect } from 'react';
 
 export default function Order() {
   const { cart } = useCart();
-  // const changeCart = useCartUpdate();
+  const changeCart = useCartUpdate(); // this one has two functions: add2Cart and removeFromCart
 
-  // // check if cart is empty, if so, get the cookie with the cart if any
-  // if (cart.length === 0) {
-  //   const cookie = document.cookie.split(';').find((c) => c.includes('cart='));
-  //   if (cookie) {
-  //     const cartCookie = JSON.parse(cookie.split('=')[1]);
-  //     changeCart.add2Cart(cartCookie);
-  //   }
-  // }
-
-  // const [cartData, setCartData] = useState(null);
-
-  // useEffect(() => {
-  //   async function fetchCartData() {
-  //     const cart = await fetch('/api/cart').then((res) => res.json());
-  //     setCartData(cart);
-  //   }
-  //   fetchCartData();
-  // }, []);
-
-  // if (!cartData) {
-  //   return <div>Loading...</div>;
-  // }
+  // check if cart is empty, if so, get the cart from the session storage
+  useEffect(() => {
+    if (cart.length === 0 && typeof window !== 'undefined') {
+      const cartFromSession = JSON.parse(sessionStorage.getItem('cart'));
+      if (cartFromSession) {
+        changeCart.add2Cart(cartFromSession);
+      }
+    }
+  }, []);
 
   let total = 0;
   cart.forEach((item) => {
