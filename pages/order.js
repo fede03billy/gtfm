@@ -4,10 +4,46 @@
 import { useCart, useCartUpdate } from '../components/cartContext';
 import FoodListCart from '../components/foodListCart';
 import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 
 export default function Order() {
+  const router = useRouter();
   const { cart } = useCart();
   const changeCart = useCartUpdate(); // this one has two functions: add2Cart and removeFromCart
+
+  // function to send the order to the API
+  async function sendOrder() {
+    const cart = JSON.parse(sessionStorage.getItem('cart')); // get the cart from the session storage
+    if (cart?.length === 0 || !cart) {
+      window.alert('Il carrello è vuoto');
+      return;
+    }
+    const table_id = 'test01'; // TODO: get the table_id from a future user context
+    const user_id = 'test01'; // TODO: get the user token from the cookie and the user_id from the database
+    const restaurant_id = '63f506cc6f4516ca29817526'; // TODO: get the restaurant_id from a future user context
+    const total_price = total;
+    // send the order to the API
+    const res = await fetch('/api/order', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        restaurant_id,
+        table_id,
+        cart,
+        user_id,
+        total_price,
+      }),
+    });
+    // if the order is sent successfully, clear the cart
+    if (res.status === 200) {
+      // redirect user to the home page
+      router.push(`/?resid=${restaurant_id}&tabid=${table_id}`);
+      // remove the cart from the session storage
+      sessionStorage.removeItem('cart');
+    }
+  }
 
   // check if cart is empty, if so, get the cart from the session storage
   useEffect(() => {
@@ -34,6 +70,13 @@ export default function Order() {
           <p className="text-xl">{total.toFixed(2)}€</p>
         </div>
       </div>
+      {/* Let's make a button to pay the order */}
+      <button
+        className="bg-gray-300 py-2 px-4 rounded shadow hover:bg-gray-400 mr-1"
+        onClick={sendOrder}
+      >
+        Pagare
+      </button>
     </div>
   );
 }
