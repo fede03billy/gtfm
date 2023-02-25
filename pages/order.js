@@ -6,7 +6,6 @@ import FoodListCart from '../components/foodListCart';
 import { useMemo, useState, useEffect } from 'react';
 
 export default function Order() {
-  console.log('im rendering order page');
   const { cart } = useCart();
   // const changeCart = useCartUpdate();
 
