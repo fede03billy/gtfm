@@ -2,32 +2,47 @@
 // Path: pages/order.js
 
 import { useCart, useCartUpdate } from '../components/cartContext';
-import FoodItemCart from '../components/foodItemCart';
+import FoodListCart from '../components/foodListCart';
+import { useMemo, useState, useEffect } from 'react';
 
 export default function Order() {
+  console.log('im rendering order page');
   const { cart } = useCart();
-  const changeCart = useCartUpdate();
+  // const changeCart = useCartUpdate();
 
-  // check if cart is empty, if so, look in the session storage and parse the json from the string
-  if (cart.length === 0 && typeof window !== 'undefined') {
-    const cartFromSessionStorage = JSON.parse(sessionStorage.getItem('cart'));
-    if (cartFromSessionStorage) {
-      changeCart.add2Cart(cartFromSessionStorage);
-    }
-    // remove the cart from the session storage
-    sessionStorage.removeItem('cart');
-  }
+  // // check if cart is empty, if so, get the cookie with the cart if any
+  // if (cart.length === 0) {
+  //   const cookie = document.cookie.split(';').find((c) => c.includes('cart='));
+  //   if (cookie) {
+  //     const cartCookie = JSON.parse(cookie.split('=')[1]);
+  //     changeCart.add2Cart(cartCookie);
+  //   }
+  // }
+
+  // const [cartData, setCartData] = useState(null);
+
+  // useEffect(() => {
+  //   async function fetchCartData() {
+  //     const cart = await fetch('/api/cart').then((res) => res.json());
+  //     setCartData(cart);
+  //   }
+  //   fetchCartData();
+  // }, []);
+
+  // if (!cartData) {
+  //   return <div>Loading...</div>;
+  // }
 
   let total = 0;
+  cart.forEach((item) => {
+    total += item.price / 100; // * item.quantity;
+  });
 
   return (
     <div className="container mx-auto px-4">
       <h1 className="text-4xl font-bold text-center my-4">Order Summary</h1>
       <div className="flex flex-col">
-        {cart.map((item, index) => {
-          total += item.price / 100;
-          return <FoodItemCart key={index} item={item} />;
-        })}
+        <FoodListCart cart={cart} />
         <div className="flex justify-between">
           <p className="text-xl">Total</p>
           <p className="text-xl">{total.toFixed(2)}€</p>

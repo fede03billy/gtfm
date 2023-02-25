@@ -3,11 +3,12 @@ import styles from '../styles/Home.module.css';
 import Categories from '../components/categories';
 import FoodList from '../components/foodList';
 import Link from 'next/link';
-import { useCart } from '../components/cartContext';
+// import { useCart } from '../components/cartContext';
 
 export default function Home(props) {
+  console.log('im rendering home page');
   const { table_id, food } = props;
-  const { cart } = useCart();
+  // const { cart } = useCart();
 
   // in this part of the code the category provider is not initialized yet,
   // so we cannot use the context, the category is initialized in the FoodList component
@@ -35,13 +36,8 @@ export default function Home(props) {
           <button
             className="bg-gray-300 py-2 px-4 rounded shadow hover:bg-gray-400 mr-1"
             onClick={() => {
-              // save the cart in the session storage
-              if (typeof window !== undefined) {
-                if (window.sessionStorage.getItem('cart')) {
-                  window.sessionStorage.removeItem('cart');
-                }
-                window.sessionStorage.setItem('cart', JSON.stringify(cart));
-              }
+              //   // save the cart in a cookie
+              //   document.cookie = `cart=${JSON.stringify(cart)}`;
             }}
           >
             Order

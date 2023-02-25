@@ -15,8 +15,7 @@ export default function Add2CartButton(props) {
           changeCart.add2Cart(item);
         }}
       >
-        {' '}
-        Add to cart{' '}
+        Add to cart
       </button>
     </div>
   );
