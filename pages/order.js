@@ -18,10 +18,13 @@ export default function Order() {
       window.alert('Il carrello è vuoto');
       return;
     }
-    const table_id = 'test01'; // TODO: get the table_id from a future user context
+    // get the table_id from the query parameter
+    const table_id = router.query.tabid;
     const user_id = 'test01'; // TODO: get the user token from the cookie and the user_id from the database
-    const restaurant_id = '63f506cc6f4516ca29817526'; // TODO: get the restaurant_id from a future user context
-    const total_price = total;
+    // get the restaurant_id from the query parameter
+    const restaurant_id = router.query.resid;
+
+    const total_price = total.toFixed(2);
     // send the order to the API
     const res = await fetch('/api/order', {
       method: 'POST',
@@ -39,9 +42,9 @@ export default function Order() {
     // if the order is sent successfully, clear the cart
     if (res.status === 200) {
       // redirect user to the home page
-      router.push(`/?resid=${restaurant_id}&tabid=${table_id}`);
-      // remove the cart from the session storage
-      sessionStorage.removeItem('cart');
+      router.push(`/confirmation?resid=${restaurant_id}&tabid=${table_id}`);
+    } else {
+      window.alert('Si è verificato un errore');
     }
   }
 

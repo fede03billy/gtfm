@@ -6,8 +6,9 @@ import Link from 'next/link';
 import { useCart } from '../components/cartContext';
 
 export default function Home(props) {
-  const { table_id, food } = props;
+  const { restaurant_id, table_id, food } = props;
   const { cart } = useCart();
+  const orderLink = `/order?resid=${restaurant_id}&tabid=${table_id}`;
 
   // in this part of the code the category provider is not initialized yet,
   // so we cannot use the context, the category is initialized in the FoodList component
@@ -31,7 +32,7 @@ export default function Home(props) {
       </main>
       <footer className={styles.footer}>
         {/* button to redirect to /order */}
-        <Link href="/order">
+        <Link href={orderLink}>
           <button
             className="bg-gray-300 py-2 px-4 rounded shadow hover:bg-gray-400 mr-1"
             onClick={() => {
@@ -65,6 +66,7 @@ export async function getServerSideProps(context) {
   // Return the data as props
   return {
     props: {
+      restaurant_id,
       table_id,
       food: res,
     },

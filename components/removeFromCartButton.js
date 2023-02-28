@@ -18,7 +18,6 @@ export default function RemoveFromCartButton(props) {
             const cart2save = cart.filter(
               (cartItem) => cartItem._id !== item._id
             );
-            console.log(cart2save);
             sessionStorage.setItem('cart', JSON.stringify(cart2save));
           }
         }}
