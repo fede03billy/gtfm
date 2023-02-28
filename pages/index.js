@@ -7,6 +7,9 @@ import { useCart } from '../components/cartContext';
 
 export default function Home(props) {
   const { restaurant_id, table_id, food } = props;
+  if (!restaurant_id || !table_id) {
+    return <div>404: provide restaurant & table id</div>;
+  }
   const { cart } = useCart();
   const orderLink = `/order?resid=${restaurant_id}&tabid=${table_id}`;
 
