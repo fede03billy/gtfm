@@ -26,6 +26,11 @@ const orderSchema = new mongoose.Schema({
     required: true,
     default: false,
   },
+  done: {
+    type: Boolean,
+    required: true,
+    default: false,
+  },
   delivered: {
     type: Boolean,
     required: true,
