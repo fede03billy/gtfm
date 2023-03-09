@@ -14,7 +14,6 @@ export default function Waiter() {
   function redirectToHome() {
     // empty the cart in the context
     changeCart.clearCart();
-    console.log('clearing cart');
     if (typeof window !== 'undefined') {
       // remove the cart from the session storage
       window.sessionStorage.removeItem('cart');

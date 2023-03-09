@@ -4,17 +4,20 @@ import Categories from '../components/categories';
 import FoodList from '../components/foodList';
 import Link from 'next/link';
 import { useCart } from '../components/cartContext';
+import Error from 'next/error';
 
 export default function Home(props) {
   const { restaurant_id, table_id, food } = props;
-  if (!restaurant_id || !table_id) {
-    return <div>404: provide restaurant & table id</div>;
-  }
   const { cart } = useCart();
   const orderLink = `/order?resid=${restaurant_id}&tabid=${table_id}`;
 
   // in this part of the code the category provider is not initialized yet,
   // so we cannot use the context, the category is initialized in the FoodList component
+
+  // check if there are no restaurant_id and table_if, in that case we will show a 404 page
+  if (!restaurant_id || !table_id) {
+    return <Error statusCode={404} />;
+  }
 
   return (
     <div className={styles.container}>
@@ -59,6 +62,11 @@ export async function getServerSideProps(context) {
   const { query } = context;
   let restaurant_id = query.resid;
   let table_id = query.tabid;
+
+  if (!restaurant_id || !table_id) {
+    restaurant_id = null;
+    table_id = null;
+  }
 
   // Get the data from the API
   const res = await fetch(
