@@ -28,7 +28,7 @@ export default function Home(props) {
       </Head>
 
       <main className="flex flex-col align-top content-center">
-        <div className="flex justify-between text-4xl font-bold mb-4">
+        <div className="flex justify-between text-4xl font-bold mb-4 px-4">
           <div>{`${restaurantInfo.name}`}</div>
           <div className="font-medium text-lg">{`${table_id}`}</div>
         </div>
