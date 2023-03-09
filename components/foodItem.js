@@ -7,7 +7,7 @@ export default function FoodItem(props) {
 
   return (
     <div className="flex flex-col justify-center items-center">
-      <div className="bg-white rounded-lg shadow-lg p-4 m-4 w-64">
+      <div className="bg-amber-100 rounded-lg shadow-lg p-4 m-4 w-64">
         <div className="flex flex-col justify-center items-center">
           <div className="text-xl font-bold">{item.name}</div>
           <div className="text-lg font-medium">{item.price / 100} €</div>
