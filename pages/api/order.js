@@ -19,7 +19,7 @@ export default async function handler(req, res) {
       user_id,
       total_price: total_price * 100,
     });
-    console.log(order);
+    // console.log(order);
     res.status(200).json({ success: true });
   } catch (error) {
     console.error(error);
