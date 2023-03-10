@@ -1,6 +1,7 @@
 // component to add items to cart
 // Path: components/add2Cart.js
 
+import Image from 'next/image';
 import { useCartUpdate } from './cartContext';
 
 export default function Add2CartButton(props) {
@@ -10,12 +11,17 @@ export default function Add2CartButton(props) {
   return (
     <div>
       <button
-        className="bg-gray-300 py-2 px-4 rounded hover:bg-gray-400 mr-1"
+        className="bg-amber-300 p-4 rounded hover:bg-amber-400 aspect-square"
         onClick={() => {
           changeCart.add2Cart(item);
         }}
       >
-        Add to cart
+        <Image
+          src="https://www.svgrepo.com/show/61879/add-to-cart.svg"
+          height={25}
+          width={25}
+          alt="Add to cart"
+        />
       </button>
     </div>
   );

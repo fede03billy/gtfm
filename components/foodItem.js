@@ -7,7 +7,7 @@ export default function FoodItem(props) {
 
   return (
     <div className="flex flex-col justify-center items-center">
-      <div className="bg-amber-100 rounded-lg p-4 m-4 w-full">
+      <div className="bg-amber-100 rounded-lg p-4 mt-4 w-full">
         <div className="flex flex-row justify-between items-center">
           <div className="w-3/4">
             <div className="text-xl font-bold">{item.name}</div>
@@ -16,7 +16,9 @@ export default function FoodItem(props) {
               {item.description}
             </div>
           </div>
-          <Add2CartButton item={item} />
+          <div className="w-1/4 pl-4 flex justify-end">
+            <Add2CartButton item={item} />
+          </div>
         </div>
       </div>
     </div>

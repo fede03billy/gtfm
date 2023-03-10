@@ -1,5 +1,5 @@
 import Head from 'next/head';
-// import styles from '../styles/Home.module.css'; // to be removed and substituted with tailwind
+import { use, useEffect } from 'react';
 import Categories from '../components/categories';
 import FoodList from '../components/foodList';
 import Link from 'next/link';
@@ -40,7 +40,8 @@ export default function Home(props) {
           {/* button to redirect to /order */}
           <Link href={orderLink}>
             <button
-              className="bg-amber-200 py-2 px-4 rounded hover:bg-amber-300 w-full"
+              id="ordine"
+              className="bg-amber-500 py-2 px-4 rounded hover:bg-amber-600 w-full"
               onClick={() => {
                 // save the cart in the session storage
                 if (typeof window !== 'undefined') {
@@ -48,7 +49,7 @@ export default function Home(props) {
                 }
               }}
             >
-              Order
+              {`Ordine (${cart.length})`}
             </button>
           </Link>
         </footer>

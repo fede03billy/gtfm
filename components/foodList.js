@@ -15,12 +15,13 @@ export default function FoodList(props) {
   }, []);
 
   return (
-    <div className="foodListContainer overflow-y-auto overscroll-contain overflow-hidden scroll-smooth">
+    <div className="relative foodListContainer overflow-y-auto overscroll-contain overflow-hidden scroll-smooth">
       {food.map((item, index) => {
         if (item.category === category.category) {
           return <FoodItem item={item} key={index} />;
         }
       })}
+      {/* <div className="sticky bottom-0 left-0 w-full h-10 bg-gradient-to-t from-amber-50 z-50 mt-auto"></div> */}
     </div>
   );
 }
