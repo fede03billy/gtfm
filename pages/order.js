@@ -69,7 +69,7 @@ export default function Order() {
 
   return (
     <div className="flex justify-center">
-      <div className="container h-screen w-screen max-w-xl font-serif p-4">
+      <div className="flex flex-col container h-screen w-screen max-w-xl font-serif p-4">
         <div className="flex justify-between text-4xl font-bold mb-4 px-4">
           <div>Ordine</div>
           <div className="font-medium text-lg">{`${table_id}`}</div>
@@ -82,7 +82,7 @@ export default function Order() {
             <p className="text-xl">{total.toFixed(2)}€</p>
           </div>
         </div>
-        <div className="mt-auto flex w-full pb-4 justify-between gap-4">
+        <div className="mt-auto w-full flex pb-4 justify-between gap-4">
           <button
             className="bg-amber-500 hover:bg-amber-600 py-2 px-4 rounded grow"
             onClick={getBack}

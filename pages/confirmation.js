@@ -23,28 +23,32 @@ export default function Waiter() {
   }
 
   return (
-    <div className="flex-col">
-      <h1>Waiter</h1>
-      {/* TODO: list all the order for the specific user if he did more than one */}
-      {/* button go to home page to order again */}
-      <button
-        onClick={redirectToHome}
-        className="bg-gray-300 py-2 px-4 rounded hover:bg-gray-400 mr-1"
-      >
-        Ordina di nuovo
-      </button>
-      {/* button to pay the bill */}
-      <button
-        className="bg-gray-300 py-2 px-4 rounded hover:bg-gray-400 mr-1"
-        //onClick={window.alert('TODO: pay the bill')}
-      >
-        Pagare ora
-      </button>
+    <div className="flex justify-center">
+      <div className="flex flex-col h-screen w-screen max-w-xl font-serif p-4">
+        <div>Il tuo ordine è in preparazione.</div>
+        {/* TODO: list all the order for the specific user if he did more than one */}
+        <div className="mt-auto flex w-full pb-4 justify-between gap-4">
+          <button
+            onClick={redirectToHome}
+            className="bg-amber-500 py-2 px-4 rounded hover:bg-amber-600 grow"
+          >
+            Fai un nuovo ordine
+          </button>
+          {/* button to pay the bill */}
+          <button
+            className="bg-amber-500 py-2 px-4 rounded hover:bg-amber-600 grow"
+            //onClick={window.alert('TODO: pay the bill')}
+          >
+            Paga ora
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
 
 // getserversideprops to initialize stripe payment intent
+// also retrieve the order from the database and display it to the user
 
 // export async function getServerSideProps(context) {
 //   const session = await getSession(context);
