@@ -7,14 +7,14 @@ export default function FoodItemCart(props) {
   const { item, index } = props;
 
   return (
-    <div className="flex flex-col">
-      <div key={index} className="flex justify-between">
-        <p className="text-xl">
-          {item.name} - {item.price / 100}€
-        </p>
-        {/* <p className="text-xl">{item.quantity}</p> */}
-        <RemoveFromCartButton item={item} />
+    <div key={index} className="flex justify-between mb-4">
+      <div className="flex flex-col">
+        <div className="text-xl">
+          {item.name} ({item.quantity})
+        </div>
+        <div className="text-sm">{item.price / 100}€</div>
       </div>
+      <RemoveFromCartButton item={item} />
     </div>
   );
 }

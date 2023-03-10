@@ -10,6 +10,8 @@ export default function Order() {
   const router = useRouter();
   const { cart } = useCart();
   const changeCart = useCartUpdate(); // this one has two functions: add2Cart and removeFromCart
+  const restaurant_id = router.query.resid;
+  const table_id = router.query.tabid;
 
   // function to send the order to the API
   async function sendOrder() {
@@ -18,11 +20,8 @@ export default function Order() {
       window.alert('Il carrello è vuoto');
       return;
     }
-    // get the table_id from the query parameter
-    const table_id = router.query.tabid;
+
     const user_id = 'test01'; // TODO: get the user token from the cookie and the user_id from the database
-    // get the restaurant_id from the query parameter
-    const restaurant_id = router.query.resid;
 
     const total_price = total.toFixed(2);
     // send the order to the API
@@ -48,6 +47,11 @@ export default function Order() {
     }
   }
 
+  // function to go back to the home page
+  function getBack() {
+    router.push(`/?resid=${restaurant_id}&tabid=${table_id}`);
+  }
+
   // check if cart is empty, if so, get the cart from the session storage
   useEffect(() => {
     if (cart.length === 0 && typeof window !== 'undefined') {
@@ -64,22 +68,35 @@ export default function Order() {
   });
 
   return (
-    <div className="container mx-auto px-4">
-      <h1 className="text-4xl font-bold text-center my-4">Order Summary</h1>
-      <div className="flex flex-col">
-        <FoodListCart cart={cart} />
-        <div className="flex justify-between">
-          <p className="text-xl">Total</p>
-          <p className="text-xl">{total.toFixed(2)}€</p>
+    <div className="flex justify-center">
+      <div className="container h-screen w-screen max-w-xl font-serif p-4">
+        <div className="flex justify-between text-4xl font-bold mb-4 px-4">
+          <div>Ordine</div>
+          <div className="font-medium text-lg">{`${table_id}`}</div>
+        </div>
+        <div className="flex flex-col rounded p-4 bg-amber-100 mb-4">
+          <FoodListCart cart={cart} />
+          <div className="h-px bg-amber-900 my-4"></div>
+          <div className="flex justify-between">
+            <p className="text-xl">Total</p>
+            <p className="text-xl">{total.toFixed(2)}€</p>
+          </div>
+        </div>
+        <div className="mt-auto flex w-full pb-4 justify-between gap-4">
+          <button
+            className="bg-amber-500 hover:bg-amber-600 py-2 px-4 rounded grow"
+            onClick={getBack}
+          >
+            Ordina altro
+          </button>
+          <button
+            className="bg-amber-500 py-2 px-4 rounded hover:bg-amber-600 grow"
+            onClick={sendOrder}
+          >
+            Invia l'ordine
+          </button>
         </div>
       </div>
-      {/* Let's make a button to pay the order */}
-      <button
-        className="bg-gray-300 py-2 px-4 rounded hover:bg-gray-400 mr-1"
-        onClick={sendOrder}
-      >
-        Pagare
-      </button>
     </div>
   );
 }
