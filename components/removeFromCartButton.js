@@ -11,7 +11,7 @@ export default function RemoveFromCartButton(props) {
   return (
     <div>
       <button
-        className="bg-gray-300 py-2 px-4 rounded shadow hover:bg-gray-400 mr-1"
+        className="bg-gray-300 py-2 px-4 rounded hover:bg-gray-400 mr-1"
         onClick={() => {
           changeCart.removeFromCart(item);
           if (typeof window !== 'undefined') {

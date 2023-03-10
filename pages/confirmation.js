@@ -29,13 +29,13 @@ export default function Waiter() {
       {/* button go to home page to order again */}
       <button
         onClick={redirectToHome}
-        className="bg-gray-300 py-2 px-4 rounded shadow hover:bg-gray-400 mr-1"
+        className="bg-gray-300 py-2 px-4 rounded hover:bg-gray-400 mr-1"
       >
         Ordina di nuovo
       </button>
       {/* button to pay the bill */}
       <button
-        className="bg-gray-300 py-2 px-4 rounded shadow hover:bg-gray-400 mr-1"
+        className="bg-gray-300 py-2 px-4 rounded hover:bg-gray-400 mr-1"
         //onClick={window.alert('TODO: pay the bill')}
       >
         Pagare ora

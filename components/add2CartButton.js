@@ -10,7 +10,7 @@ export default function Add2CartButton(props) {
   return (
     <div>
       <button
-        className="bg-gray-300 py-2 px-4 rounded shadow hover:bg-gray-400 mr-1"
+        className="bg-gray-300 py-2 px-4 rounded hover:bg-gray-400 mr-1"
         onClick={() => {
           changeCart.add2Cart(item);
         }}

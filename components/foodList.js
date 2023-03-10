@@ -15,7 +15,7 @@ export default function FoodList(props) {
   }, []);
 
   return (
-    <div>
+    <div className="foodListContainer overflow-y-auto overscroll-contain overflow-hidden scroll-smooth">
       {food.map((item, index) => {
         if (item.category === category.category) {
           return <FoodItem item={item} key={index} />;
