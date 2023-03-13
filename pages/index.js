@@ -1,10 +1,11 @@
 import Head from 'next/head';
-import { use, useEffect } from 'react';
 import Categories from '../components/categories';
 import FoodList from '../components/foodList';
 import Link from 'next/link';
 import { useCart } from '../components/cartContext';
 import Error from 'next/error';
+import { useEffect } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 export default function Home(props) {
   const { restaurantInfo, restaurant_id, table_id, food } = props;
@@ -18,6 +19,43 @@ export default function Home(props) {
   if (!restaurant_id || !table_id) {
     return <Error statusCode={404} />;
   }
+
+  // check if there's a token in the cookie, if not we create a uuid and save it in the cookie, and also in the database as a user
+  useEffect(() => {
+    if (typeof window !== 'undefined' || typeof document !== 'undefined') {
+      if (document.cookie) {
+        const token = document.cookie
+          .split('; ')
+          .find((row) => row.startsWith('gtfm_token='))
+          .split('=')[1];
+        if (!token) {
+          const gtfm_token = uuidv4();
+          document.cookie = `gtfm_token=${gtfm_token};`;
+          fetch('/api/user', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              gtfm_token,
+            }),
+          });
+        }
+      } else {
+        const gtfm_token = uuidv4();
+        document.cookie = `gtfm_token=${gtfm_token};`;
+        fetch('/api/user', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            gtfm_token,
+          }),
+        });
+      }
+    }
+  }, []);
 
   return (
     <div className="flex justify-center">
@@ -36,6 +74,7 @@ export default function Home(props) {
           <Categories food={food} />
           <FoodList food={food} />
         </main>
+
         <footer className="mt-auto w-full pb-4 flex flex-col">
           {/* button to redirect to /order */}
           <Link href={orderLink}>

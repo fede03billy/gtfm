@@ -1,19 +1,19 @@
-const { Schema, model } = require("mongoose");
+const mongoose = require('mongoose');
 
-const userSchema = new Schema({
-    token: {
-        type: String,
-        required: true,
-    },
-    order_id: {
-        type: String,
-        required: false,
-    },
-    created_at: {
-        type: Date,
-        required: true,
-        default: () => new Date(),
-    },
-})
+const userSchema = new mongoose.Schema({
+  token: {
+    type: String,
+    required: true,
+  },
+  order_id: {
+    type: String,
+    required: false,
+  },
+  created_at: {
+    type: Date,
+    required: true,
+    default: () => new Date(),
+  },
+});
 
-module.exports = model("User", userSchema)
+module.exports = mongoose.models.User || mongoose.model('User', userSchema);
