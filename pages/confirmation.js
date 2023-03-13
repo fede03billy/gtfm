@@ -2,7 +2,7 @@
 // Path: pages/waiter.js
 
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useCartUpdate } from '../components/cartContext';
 
 export default function Waiter() {
@@ -11,6 +11,7 @@ export default function Waiter() {
   const { resid, tabid } = router.query;
   const restaurant_id = resid;
   const table_id = tabid;
+  const [orders, setOrders] = useState([]);
 
   function redirectToHome() {
     // empty the cart in the context
@@ -46,7 +47,9 @@ export default function Waiter() {
       fetch(`/api/order/${token}`)
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
+          let { orders } = data;
+          console.log(orders);
+          setOrders(orders);
         })
         .catch((err) => {
           console.error(err);
@@ -62,7 +65,19 @@ export default function Waiter() {
     <div className="flex justify-center">
       <div className="flex flex-col h-screen w-screen max-w-xl font-serif p-4">
         <div>Il tuo ordine è in preparazione.</div>
-        {/* TODO: list all the order for the specific user if he did more than one */}
+        {orders &&
+          orders.map((order) => {
+            return (
+              <div key={order._id}>
+                <div>Ordine #{order._id}</div>
+                <div>
+                  {order.ordered_food.map((item) => {
+                    return <div key={item._id}>{item.name}</div>;
+                  })}
+                </div>
+              </div>
+            );
+          })}
         <div className="mt-auto flex w-full pb-4 justify-between gap-4">
           <button
             onClick={redirectToHome}
