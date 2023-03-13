@@ -1,6 +1,6 @@
 // route that take the order and send it to the database
 
-import Order from '../../models/order.js';
+import Order from '../../../models/order.js';
 
 export default async function handler(req, res) {
   // Get the restaurant_id, table_id and cart from the body

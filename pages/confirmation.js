@@ -2,6 +2,7 @@
 // Path: pages/waiter.js
 
 import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 import { useCartUpdate } from '../components/cartContext';
 
 export default function Waiter() {
@@ -21,6 +22,33 @@ export default function Waiter() {
     // redirect user to the home page for a new order
     router.push(`/?resid=${restaurant_id}&tabid=${table_id}`);
   }
+
+  useEffect(() => {
+    // get the cookie with the user gtfm_token
+    let token;
+    if (typeof window !== 'undefined') {
+      // parse the cookie
+      token = document.cookie
+        .split('; ')
+        .find((row) => row.startsWith('gtfm_token'))
+        .split('=')[1];
+    }
+    if (token) {
+      // fetch the order from the server
+      fetch(`/api/order/${token}`)
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    } else {
+      console.error(
+        "Non è stato possibile identificare il tuo ordine ma non ti preoccupare, è in preparazione. Questo potrebbe essere dovuto al fatto che hai delle estensioni del browser che impediscono l'utilizzo dei cookie."
+      );
+    }
+  }, []);
 
   return (
     <div className="flex justify-center">
@@ -46,29 +74,3 @@ export default function Waiter() {
     </div>
   );
 }
-
-// getserversideprops to initialize stripe payment intent
-// also retrieve the order from the database and display it to the user
-
-// export async function getServerSideProps(context) {
-//   const session = await getSession(context);
-//   if (!session) {
-//     return {
-//       redirect: {
-//         destination: '/login',
-//         permanent: false,
-//       },
-//     };
-//   }
-
-//   const { client_secret } = await stripe.paymentIntents.create({
-//     amount: 1099,
-//     currency: 'eur',
-//   });
-
-//   return {
-//     props: {
-//       client_secret,
-//     },
-//   };
-// }

@@ -1,8 +1,8 @@
 // api route to create a new user with the token
 // pages/api/user.js
 
-import User from '../../models/user.js';
-import databaseConnection from '../../util/databaseConnection.js';
+import User from '../../../models/user.js';
+import databaseConnection from '../../../util/databaseConnection.js';
 
 databaseConnection();
 

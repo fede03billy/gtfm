@@ -21,7 +21,21 @@ export default function Order() {
       return;
     }
 
-    const user_id = 'test01'; // TODO: get the user token from the cookie and the user_id from the database
+    const token = document.cookie
+      .split('; ')
+      .find((row) => row.startsWith('gtfm_token'))
+      .split('=')[1];
+
+    const { user_id } = await fetch(`/api/user/${token}`)
+      .then((res) => res.json())
+      .catch((err) => console.error(err));
+
+    if (!user_id) {
+      window.alert(
+        'Non è stato possibile identificare il tuo ordine, chiedi allo staff se è stato ricevuto.'
+      );
+      return;
+    }
 
     const total_price = total.toFixed(2);
     // send the order to the API
