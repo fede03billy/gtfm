@@ -6,6 +6,7 @@ import { useCart } from '../components/cartContext';
 import Error from 'next/error';
 import { useEffect } from 'react';
 import createUser from '../util/createUser.js';
+import { v4 as uuidv4 } from 'uuid';
 
 export default function Home(props) {
   const { restaurantInfo, restaurant_id, table_id, food } = props;
@@ -29,10 +30,18 @@ export default function Home(props) {
           .find((row) => row.startsWith('gtfm_token='))
           .split('=')[1];
         if (!token) {
-          document.cookie = `gtfm_token=${createUser()};`;
+          const token = uuidv4();
+          document.cookie = `gtfm_token=${token};`;
+          createUser(token).catch((err) => {
+            console.error(err);
+          });
         }
       } else {
-        document.cookie = `gtfm_token=${createUser()};`;
+        const token = uuidv4();
+        document.cookie = `gtfm_token=${token};`;
+        createUser(token).catch((err) => {
+          console.error(err);
+        });
       }
     }
   }, []);

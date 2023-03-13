@@ -27,13 +27,21 @@ export default function Waiter() {
     // get the cookie with the user gtfm_token
     let token;
     if (typeof window !== 'undefined') {
+      // check if the cookie exists
+      if (!document.cookie.includes('gtfm_token')) {
+        window.alert(
+          "Non è stato possibile identificare il tuo ordine ma non ti preoccupare, è in preparazione. Questo potrebbe essere dovuto al fatto che hai delle estensioni del browser che impediscono l'utilizzo dei cookie."
+        );
+        return;
+      }
+
       // parse the cookie
       token = document.cookie
         .split('; ')
         .find((row) => row.startsWith('gtfm_token'))
         .split('=')[1];
     }
-    if (token) {
+    if (typeof token === 'string') {
       // fetch the order from the server
       fetch(`/api/order/${token}`)
         .then((res) => res.json())

@@ -5,6 +5,8 @@ import { useCart, useCartUpdate } from '../components/cartContext';
 import FoodListCart from '../components/foodListCart';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
+import createUser from '../util/createUser';
+import { v4 as uuidv4 } from 'uuid';
 
 export default function Order() {
   const router = useRouter();
@@ -22,8 +24,14 @@ export default function Order() {
     }
 
     if (!document.cookie.includes('gtfm_token')) {
-      window.alert('Non sei loggato');
-      return;
+      // the cookie doesn't exist, so we create it
+      const token = uuidv4();
+      createUser(token);
+      if (!token) {
+        window.alert('Si è verificato un errore');
+        return;
+      }
+      document.cookie = `gtfm_token=${token};`;
     }
 
     const token = document.cookie
