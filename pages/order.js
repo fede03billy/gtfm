@@ -21,6 +21,11 @@ export default function Order() {
       return;
     }
 
+    if (!document.cookie.includes('gtfm_token')) {
+      window.alert('Non sei loggato');
+      return;
+    }
+
     const token = document.cookie
       .split('; ')
       .find((row) => row.startsWith('gtfm_token'))

@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useCart } from '../components/cartContext';
 import Error from 'next/error';
 import { useEffect } from 'react';
-import { v4 as uuidv4 } from 'uuid';
+import createUser from '../util/createUser.js';
 
 export default function Home(props) {
   const { restaurantInfo, restaurant_id, table_id, food } = props;
@@ -29,30 +29,10 @@ export default function Home(props) {
           .find((row) => row.startsWith('gtfm_token='))
           .split('=')[1];
         if (!token) {
-          const gtfm_token = uuidv4();
-          document.cookie = `gtfm_token=${gtfm_token};`;
-          fetch('/api/user', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              gtfm_token,
-            }),
-          });
+          document.cookie = `gtfm_token=${createUser()};`;
         }
       } else {
-        const gtfm_token = uuidv4();
-        document.cookie = `gtfm_token=${gtfm_token};`;
-        fetch('/api/user', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            gtfm_token,
-          }),
-        });
+        document.cookie = `gtfm_token=${createUser()};`;
       }
     }
   }, []);
