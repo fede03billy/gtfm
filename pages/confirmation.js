@@ -4,6 +4,7 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useCartUpdate } from '../components/cartContext';
+import Order from '../components/order.js';
 
 export default function Waiter() {
   const router = useRouter();
@@ -22,6 +23,12 @@ export default function Waiter() {
     }
     // redirect user to the home page for a new order
     router.push(`/?resid=${restaurant_id}&tabid=${table_id}`);
+  }
+
+  function renderOrders(orders) {
+    return orders.map((order) => {
+      return <Order key={order._id} order={order} />;
+    });
   }
 
   useEffect(() => {
@@ -48,7 +55,6 @@ export default function Waiter() {
         .then((res) => res.json())
         .then((data) => {
           let { orders } = data;
-          console.log(orders);
           setOrders(orders);
         })
         .catch((err) => {
@@ -64,20 +70,11 @@ export default function Waiter() {
   return (
     <div className="flex justify-center">
       <div className="flex flex-col h-screen w-screen max-w-xl font-serif p-4">
-        <div>Il tuo ordine è in preparazione.</div>
-        {orders &&
-          orders.map((order) => {
-            return (
-              <div key={order._id}>
-                <div>Ordine #{order._id}</div>
-                <div>
-                  {order.ordered_food.map((item) => {
-                    return <div key={item._id}>{item.name}</div>;
-                  })}
-                </div>
-              </div>
-            );
-          })}
+        <div>
+          Il tuo ordine è in preparazione.
+          <br />
+          {orders.length > 0 && renderOrders(orders)}
+        </div>
         <div className="mt-auto flex w-full pb-4 justify-between gap-4">
           <button
             onClick={redirectToHome}
