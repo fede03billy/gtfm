@@ -102,7 +102,6 @@ export async function getServerSideProps(context) {
   const res = await fetch(
     `${process.env.BASE_URL}/api/restaurant/${restaurant_id}`
   ).then((res) => {
-    console.log(res);
     res.json();
   });
 
@@ -110,7 +109,6 @@ export async function getServerSideProps(context) {
   const restaurantInfo = await fetch(
     `${process.env.BASE_URL}/api/restaurant/info/${restaurant_id}`
   ).then((res) => {
-    console.log(res);
     res.json();
   });
 
