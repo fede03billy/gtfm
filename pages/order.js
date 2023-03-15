@@ -120,7 +120,7 @@ export default function Order() {
             className="bg-amber-500 py-2 px-4 rounded hover:bg-amber-600 grow"
             onClick={sendOrder}
           >
-            Invia l'ordine
+            Invia l`ordine
           </button>
         </div>
       </div>
