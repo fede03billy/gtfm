@@ -4,17 +4,34 @@ import FoodList from '../components/foodList';
 import Link from 'next/link';
 import { useCart } from '../components/cartContext';
 import Error from 'next/error';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import createUser from '../util/createUser.js';
 import { v4 as uuidv4 } from 'uuid';
+import { check } from 'prettier';
 
 export default function Home(props) {
   const { restaurantInfo, restaurant_id, table_id, food } = props;
   const { cart } = useCart();
   const orderLink = `/order?resid=${restaurant_id}&tabid=${table_id}`;
+  const confirmLink = `/confirmation?resid=${restaurant_id}&tabid=${table_id}`;
+  const [activeOrder, setActiveOrder] = useState(false);
 
   // in this part of the code the category provider is not initialized yet,
   // so we cannot use the context, the category is initialized in the FoodList component
+
+  async function checkActiveOrders(token) {
+    await fetch(`/api/order/${token}`)
+      .then((res) => res.json())
+      .then((data) => {
+        let { orders } = data;
+        if (orders.length > 0) {
+          setActiveOrder(true);
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
 
   // check if there's a token in the cookie, if not we create a uuid and save it in the cookie, and also in the database as a user
   useEffect(() => {
@@ -24,12 +41,14 @@ export default function Home(props) {
           .split('; ')
           .find((row) => row.startsWith('gtfm_token='))
           ?.split('=')[1];
+        checkActiveOrders(token);
         if (!token) {
           const token = uuidv4();
           document.cookie = `gtfm_token=${token};`;
           createUser(token).catch((err) => {
             console.error(err);
           });
+          checkActiveOrders(token);
         }
       } else {
         const token = uuidv4();
@@ -37,6 +56,7 @@ export default function Home(props) {
         createUser(token).catch((err) => {
           console.error(err);
         });
+        checkActiveOrders(token);
       }
     }
   }, []);
@@ -65,7 +85,16 @@ export default function Home(props) {
         </main>
 
         <footer className="mt-auto w-full pb-4 flex flex-col">
-          {/* button to redirect to /order */}
+          {activeOrder && (
+            <Link href={confirmLink}>
+              <button
+                id="ordiniAttivi"
+                className="bg-amber-50 border border-amber-500 py-2 px-4 rounded hover:bg-amber-100 w-full mb-4"
+              >
+                Ordini Attivi
+              </button>
+            </Link>
+          )}
           <Link href={orderLink}>
             <button
               id="ordine"
@@ -101,16 +130,12 @@ export async function getServerSideProps(context) {
   // Get the data from the API
   const res = await fetch(
     `${process.env.BASE_URL}/api/restaurant/${restaurant_id}`
-  ).then((res) => {
-    res.json();
-  });
+  ).then((res) => res.json());
 
   // Get the restaurant info from the API
   const restaurantInfo = await fetch(
     `${process.env.BASE_URL}/api/restaurant/info/${restaurant_id}`
-  ).then((res) => {
-    res.json();
-  });
+  ).then((res) => res.json());
 
   // Return the data as props
   return {
