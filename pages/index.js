@@ -23,7 +23,7 @@ export default function Home(props) {
         const token = document.cookie
           .split('; ')
           .find((row) => row.startsWith('gtfm_token='))
-          .split('=')[1];
+          ?.split('=')[1];
         if (!token) {
           const token = uuidv4();
           document.cookie = `gtfm_token=${token};`;
