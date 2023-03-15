@@ -101,12 +101,18 @@ export async function getServerSideProps(context) {
   // Get the data from the API
   const res = await fetch(
     `${process.env.BASE_URL}/api/restaurant/${restaurant_id}`
-  ).then((res) => res.json());
+  ).then((res) => {
+    console.log(res);
+    res.json();
+  });
 
   // Get the restaurant info from the API
   const restaurantInfo = await fetch(
     `${process.env.BASE_URL}/api/restaurant/info/${restaurant_id}`
-  ).then((res) => res.json());
+  ).then((res) => {
+    console.log(res);
+    res.json();
+  });
 
   // Return the data as props
   return {
