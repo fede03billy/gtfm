@@ -122,8 +122,9 @@ export async function getServerSideProps(context) {
   let table_id = query.tabid;
 
   if (!restaurant_id || !table_id) {
-    restaurant_id = null;
-    table_id = null;
+    return {
+      props: {},
+    };
   }
 
   // Get the data from the API
