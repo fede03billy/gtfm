@@ -98,10 +98,10 @@ export async function getServerSideProps(context) {
     table_id = null;
   }
 
-  // Get the data from the API
-  const res = await fetch(
-    `${process.env.BASE_URL}/api/restaurant/${restaurant_id}`
-  ).then((res) => res.json());
+  // // Get the data from the API
+  // const res = await fetch(
+  //   `${process.env.BASE_URL}/api/restaurant/${restaurant_id}`
+  // ).then((res) => res.json());
 
   // Get the restaurant info from the API
   const restaurantInfo = await fetch(
@@ -112,7 +112,7 @@ export async function getServerSideProps(context) {
   return {
     props: {
       restaurantInfo,
-      restaurant_id, // TODO: avoid passing this data cause it is already in the restaurantInfo object
+      restaurant_id: restaurantInfo._id, // TODO: avoid passing this data cause it is already in the restaurantInfo object
       table_id,
       food: res,
     },
