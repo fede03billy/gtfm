@@ -7,7 +7,6 @@ import Error from 'next/error';
 import { useEffect, useState } from 'react';
 import createUser from '../util/createUser.js';
 import { v4 as uuidv4 } from 'uuid';
-import { check } from 'prettier';
 
 export default function Home(props) {
   const { restaurantInfo, restaurant_id, table_id, food } = props;
