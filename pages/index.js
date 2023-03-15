@@ -16,11 +16,6 @@ export default function Home(props) {
   // in this part of the code the category provider is not initialized yet,
   // so we cannot use the context, the category is initialized in the FoodList component
 
-  // check if there are no restaurant_id and table_if, in that case we will show a 404 page
-  if (!restaurant_id || !table_id) {
-    return <Error statusCode={404} />;
-  }
-
   // check if there's a token in the cookie, if not we create a uuid and save it in the cookie, and also in the database as a user
   useEffect(() => {
     if (typeof window !== 'undefined' || typeof document !== 'undefined') {
@@ -45,6 +40,11 @@ export default function Home(props) {
       }
     }
   }, []);
+
+  // check if there are no restaurant_id and table_if, in that case we will show a 404 page
+  if (!restaurant_id || !table_id) {
+    return <Error statusCode={404} />;
+  }
 
   return (
     <div className="flex justify-center">
