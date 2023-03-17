@@ -57,7 +57,6 @@ export default function Home(props) {
         createUser(token).catch((err) => {
           console.error(err);
         });
-        checkActiveOrders(token);
       }
     }
   }, []);

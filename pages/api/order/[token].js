@@ -16,7 +16,9 @@ export default async function handler(req, res) {
   try {
     // get the user from the token
     const user = await User.findOne({ token });
-    // format the user id from new ObjectId("640f51bb1ea6d504fae8def8") to 640f51bb1ea6d504fae8def8 with a replace
+
+    if (!user) return res.status(203).json({ message: 'User not found' });
+    // format the user id from `new ObjectId("640f51bb1ea6d504fae8def8")` to 640f51bb1ea6d504fae8def8 with a replace
     const userId = user._id.toString().replace(/new ObjectId\(\"$1\"\)/g, '$1');
 
     // create the order
