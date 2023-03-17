@@ -35,11 +35,13 @@ export default function Home(props) {
   // check if there's a token in the cookie, if not we create a uuid and save it in the cookie, and also in the database as a user
   useEffect(() => {
     if (typeof window !== 'undefined' || typeof document !== 'undefined') {
-      if (document.cookie) {
+      if (document.cookie.includes('gtfm_token')) {
         const token = document.cookie
           .split('; ')
           .find((row) => row.startsWith('gtfm_token='))
-          ?.split('=')[1];
+          .split('=')[1]
+          .replace(/['"]+/g, '')
+          .trim();
         checkActiveOrders(token);
         if (!token) {
           const token = uuidv4();
