@@ -6,7 +6,6 @@ export default async function handler(req, res) {
   let restaurant_id = req.query?.restaurant_id;
   // clean restaurant_id of the quotes and spaces
   restaurant_id = restaurant_id.replace(/['"]+/g, '').trim();
-  console.log(restaurant_id);
   try {
     await databaseConnection();
     const restaurantInfo = await Restaurant.findOne({ _id: restaurant_id });
