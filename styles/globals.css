@@ -16,7 +16,9 @@ a {
   box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
+/* TODO: When we have a color paletta for both color-schemes, fill these attributes */
+
+/* @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
   }
@@ -25,6 +27,16 @@ a {
     background: gray;
   }
 }
+
+@media (prefers-color-scheme: light) {
+  html {
+    color-scheme: light;
+  }
+  body {
+    color: black;
+    background: rgb(255 251 235);
+  }
+} */
 
 @tailwind base;
 @tailwind components;
@@ -53,6 +65,7 @@ main {
 @media screen and (max-height: 720px) {
   .mainContainer{
     height: auto;
+    margin: 0 1rem 1rem 1rem;
   }
   .foodListContainer {
     max-height: 100%;
