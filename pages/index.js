@@ -75,7 +75,7 @@ export default function Home(props) {
           <link rel="icon" href="/favicon.ico" />
         </Head>
 
-        <main className="flex flex-col align-top content-center">
+        <main className="flex flex-col align-top">
           <div className='sticky top-0 z-10 bg-amber-50 pt-4'> {/* Container sticky for restaurant title and category list */}
             <div className="flex justify-between text-4xl font-bold mb-4 px-4">
               <div>{`${restaurantInfo.name}`}</div>
@@ -86,31 +86,33 @@ export default function Home(props) {
           <FoodList food={food} />
         </main>
 
-        <footer className="fixed bottom-0 w-full pb-4 flex flex-col">
-          {activeOrder && (
-            <Link href={confirmLink}>
+        <footer className="fixed bottom-0 w-full flex flex-col">
+          <div className='footerContainer bg-amber-50 py-4'>
+            {activeOrder && (
+              <Link href={confirmLink}>
+                <button
+                  id="ordiniAttivi"
+                  className="bg-amber-50 border border-amber-500 py-2 px-4 rounded hover:bg-amber-100 w-full mb-4"
+                >
+                  Ordini Attivi
+                </button>
+              </Link>
+            )}
+            <Link href={orderLink}>
               <button
-                id="ordiniAttivi"
-                className="bg-amber-50 border border-amber-500 py-2 px-4 rounded hover:bg-amber-100 w-full mb-4"
+                id="ordine"
+                className="bg-amber-500 py-2 px-4 rounded hover:bg-amber-600"
+                onClick={() => {
+                  // save the cart in the session storage
+                  if (typeof window !== 'undefined') {
+                    sessionStorage.setItem('cart', JSON.stringify(cart));
+                  }
+                }}
               >
-                Ordini Attivi
+                {`Ordine (${cart.length})`}
               </button>
             </Link>
-          )}
-          <Link href={orderLink}>
-            <button
-              id="ordine"
-              className="bg-amber-500 py-2 px-4 rounded hover:bg-amber-600 w-full"
-              onClick={() => {
-                // save the cart in the session storage
-                if (typeof window !== 'undefined') {
-                  sessionStorage.setItem('cart', JSON.stringify(cart));
-                }
-              }}
-            >
-              {`Ordine (${cart.length})`}
-            </button>
-          </Link>
+          </div>
         </footer>
       </div>
     </div>
