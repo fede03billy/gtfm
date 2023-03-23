@@ -69,7 +69,7 @@ export default function Waiter() {
 
   return (
     <div className="flex justify-center">
-      <div className="flex flex-col h-screen w-screen max-w-xl font-serif p-4">
+      <div className="flex flex-col h-screen w-screen max-w-xl font-serif p-4 mb-[70px]">
         <div>
           Il tuo ordine è in preparazione.
           <br />
