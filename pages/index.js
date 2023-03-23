@@ -76,7 +76,9 @@ export default function Home(props) {
         </Head>
 
         <main className="flex flex-col align-top">
-          <div className='sticky top-0 z-10 bg-amber-50 pt-4'> {/* Container sticky for restaurant title and category list */}
+          <div className="sticky top-0 z-10 bg-amber-50 pt-4">
+            {' '}
+            {/* Container sticky for restaurant title and category list */}
             <div className="flex justify-between text-4xl font-bold mb-4 px-4">
               <div>{`${restaurantInfo.name}`}</div>
               <div className="font-medium text-lg">{`${table_id}`}</div>
@@ -86,22 +88,22 @@ export default function Home(props) {
           <FoodList food={food} />
         </main>
 
-        <footer className="fixed bottom-0 w-full flex flex-col">
-          <div className='footerContainer bg-amber-50 py-4'>
+        <footer className="fixed bottom-0 w-full">
+          <div className="footerContainer bg-amber-50 py-4 flex flex-row gap-4 mb-4">
             {activeOrder && (
-              <Link href={confirmLink}>
+              <Link href={confirmLink} className="grow">
                 <button
                   id="ordiniAttivi"
-                  className="bg-amber-50 border border-amber-500 py-2 px-4 rounded hover:bg-amber-100 w-full mb-4"
+                  className="bg-amber-50 border border-amber-500 py-2 px-4 rounded hover:bg-amber-100 w-full"
                 >
                   Ordini Attivi
                 </button>
               </Link>
             )}
-            <Link href={orderLink}>
+            <Link href={orderLink} className="grow">
               <button
                 id="ordine"
-                className="bg-amber-500 py-2 px-4 rounded hover:bg-amber-600"
+                className="bg-amber-500 py-2 px-4 rounded hover:bg-amber-600 w-full"
                 onClick={() => {
                   // save the cart in the session storage
                   if (typeof window !== 'undefined') {
