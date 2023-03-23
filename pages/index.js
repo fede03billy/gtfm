@@ -89,7 +89,7 @@ export default function Home(props) {
         </main>
 
         <footer className="fixed bottom-0 w-full">
-          <div className="footerContainer bg-amber-50 py-4 flex flex-row gap-4 mb-4">
+          <div className="footerContainer bg-amber-50 py-4 flex flex-row gap-4">
             {activeOrder && (
               <Link href={confirmLink} className="grow">
                 <button
