@@ -12,7 +12,9 @@ export default function FoodItemCart(props) {
         <div className="text-xl">
           {item.name} ({item.quantity})
         </div>
-        <div className="text-sm">{(item.price / 100).toFixed(2)}€</div>
+        <div className="text-sm">
+          {((item.price * item.quantity) / 100).toFixed(2)}€
+        </div>
       </div>
       <RemoveFromCartButton item={item} />
     </div>

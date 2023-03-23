@@ -10,7 +10,7 @@ export default function FoodItemSummary(props) {
         <div className="text-sm">
           {item.name} ({item.quantity})
         </div>
-        <div className="text-sm">{item.price / 100} €</div>
+        <div className="text-sm">{(item.price * item.quantity) / 100} €</div>
       </div>
     </div>
   );

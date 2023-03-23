@@ -5,24 +5,26 @@ import FoodListSummary from './foodListSummary.js';
 
 export default function Order({ order }) {
   const [food, setFood] = useState([]);
+
+  // retrieve the food from the database and show it in the order summary
+  // we will use the food id in the ordered_food property of order
+  async function getFood(food_array) {
+    await fetch('/api/food', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        ordered_food: food_array,
+      }),
+    })
+      .then((res) => res.json())
+      .then((res) => setFood(res.food));
+  }
+
   useEffect(() => {
-    // with this use effect we will retrieve the food from the database and show it in the order summary
-    // we will use the food id in the ordered_food property of order
-    async function getFood(food_array) {
-      await fetch('/api/food', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          ordered_food: food_array,
-        }),
-      })
-        .then((res) => res.json())
-        .then((res) => setFood(res.food));
-    }
     getFood(order.ordered_food);
-  }, []);
+  }, []); // i'm using a useEffect to avoid multiple running of the function, but there must be a better way to do it
 
   return (
     <div className="bg-amber-100 p-4 my-4 rounded">
