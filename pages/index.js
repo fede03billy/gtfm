@@ -75,15 +75,10 @@ export default function Home(props) {
           <link rel="icon" href="/favicon.ico" />
         </Head>
 
-<<<<<<< HEAD
-        <main className={`flex flex-col align-top mb-[55px] sm:mb-0`}>
+        <main className="flex flex-col align-top mb-[70px]">
           <div className="sticky top-0 z-10 bg-amber-50 pt-4">
             {' '}
             {/* Container sticky for restaurant title and category list */}
-=======
-        <main className="flex flex-col align-top mb-[70px]">
-          <div className='sticky top-0 z-10 bg-amber-50 pt-4'> {/* Container sticky for restaurant title and category list */}
->>>>>>> feature/ui
             <div className="flex justify-between text-4xl font-bold mb-4 px-4">
               <div>{`${restaurantInfo.name}`}</div>
               <div className="font-medium text-lg">{`${table_id}`}</div>
