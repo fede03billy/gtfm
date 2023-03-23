@@ -129,7 +129,11 @@ export default function Home(props) {
                   }
                 }}
               >
-                {`Ordine (${cart.length})`}
+                Ordine&nbsp;
+                <span
+                  className="inline-flex items-center justify-center mb-1 h-5 w-5 rounded-full bg-red-600 bg-center">
+                  {`${cart.length}`}
+                </span>
               </button>
             </Link>
           </div>
