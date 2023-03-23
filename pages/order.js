@@ -3,6 +3,7 @@
 
 import { useCart, useCartUpdate } from '../components/cartContext';
 import FoodListCart from '../components/foodListCart';
+import Link from 'next/link';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import createUser from '../util/createUser';
@@ -109,9 +110,11 @@ export default function Order() {
             <p className="text-xl">{total.toFixed(2)}€</p>
           </div>
         </div>
-        <div className="mt-auto w-full flex pb-4 justify-between gap-4">
+
+        <footer className="fixed bottom-0 left-0 w-full flex flex-row justify-center align-center bg-amber-50 ">
+          <div className='footerContainer flex flex-row py-4 px-4 sm:px-0 max-w-xl w-full'>
           <button
-            className="bg-amber-500 hover:bg-amber-600 py-2 px-4 rounded grow"
+            className="bg-amber-500 hover:bg-amber-600 py-2 px-4 rounded grow mr-4"
             onClick={getBack}
           >
             Ordina altro
@@ -122,7 +125,11 @@ export default function Order() {
           >
             Invia Ordine
           </button>
-        </div>
+          </div>
+        </footer>
+
+        {/* <div className="mt-auto w-full flex pb-4 justify-between gap-4">
+        </div> */}
       </div>
     </div>
   );
