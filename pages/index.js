@@ -33,33 +33,31 @@ export default function Home(props) {
   }
 
   // check if there's a token in the cookie, if not we create a uuid and save it in the cookie, and also in the database as a user
-  useEffect(() => {
-    if (typeof window !== 'undefined' || typeof document !== 'undefined') {
-      if (document.cookie.includes('gtfm_token')) {
-        const token = document.cookie
-          .split('; ')
-          .find((row) => row.startsWith('gtfm_token='))
-          .split('=')[1]
-          .replace(/['"]+/g, '')
-          .trim();
-        checkActiveOrders(token);
-        if (!token) {
-          const token = uuidv4();
-          document.cookie = `gtfm_token=${token};`;
-          createUser(token).catch((err) => {
-            console.error(err);
-          });
-          checkActiveOrders(token);
-        }
-      } else {
+  if (typeof window !== 'undefined' || typeof document !== 'undefined') {
+    if (document.cookie.includes('gtfm_token')) {
+      const token = document.cookie
+        .split('; ')
+        .find((row) => row.startsWith('gtfm_token='))
+        .split('=')[1]
+        .replace(/['"]+/g, '')
+        .trim();
+      checkActiveOrders(token);
+      if (!token) {
         const token = uuidv4();
         document.cookie = `gtfm_token=${token};`;
         createUser(token).catch((err) => {
           console.error(err);
         });
+        checkActiveOrders(token);
       }
+    } else {
+      const token = uuidv4();
+      document.cookie = `gtfm_token=${token};`;
+      createUser(token).catch((err) => {
+        console.error(err);
+      });
     }
-  }, []);
+  }
 
   // check if there are no restaurant_id and table_if, in that case we will show a 404 page
   if (!restaurant_id || !table_id) {
