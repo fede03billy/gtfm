@@ -2,7 +2,7 @@
 // Path: pages/waiter.js
 
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useCartUpdate } from '../components/cartContext';
 import Order from '../components/order.js';
 
@@ -13,16 +13,17 @@ export default function Waiter() {
   const restaurant_id = resid;
   const table_id = tabid;
   const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-  function redirectToHome() {
+  async function redirectToHome() {
+    setLoading(true);
     // empty the cart in the context
     changeCart.clearCart();
-    if (typeof window !== 'undefined') {
-      // remove the cart from the session storage
-      window.sessionStorage.removeItem('cart');
-    }
+    // remove the cart from the session storage
+    window.sessionStorage.removeItem('cart');
     // redirect user to the home page for a new order
-    router.push(`/?resid=${restaurant_id}&tabid=${table_id}`);
+    await router.push(`/?resid=${restaurant_id}&tabid=${table_id}`); // this redirect take almost 1 full second...
+    setLoading(false);
   }
 
   function renderOrders(orders) {
@@ -31,25 +32,24 @@ export default function Waiter() {
     });
   }
 
-  useEffect(() => {
-    // get the cookie with the user gtfm_token
+  // get the cookie with the user gtfm_token
+  if (typeof window !== 'undefined') {
     let token;
-    if (typeof window !== 'undefined') {
-      // check if the cookie exists
-      if (!document.cookie.includes('gtfm_token')) {
-        window.alert(
-          "Non è stato possibile identificare il tuo ordine ma non ti preoccupare, è in preparazione. Questo potrebbe essere dovuto al fatto che hai delle estensioni del browser che impediscono l'utilizzo dei cookie."
-        );
-        return;
-      }
-
-      // parse the cookie
-      token = document.cookie
-        .split('; ')
-        .find((row) => row.startsWith('gtfm_token'))
-        .split('=')[1];
+    // check if the cookie exists
+    if (!document.cookie.includes('gtfm_token')) {
+      window.alert(
+        "Non è stato possibile identificare il tuo ordine ma non ti preoccupare, è in preparazione. Questo potrebbe essere dovuto al fatto che hai delle estensioni del browser che impediscono l'utilizzo dei cookie."
+      );
+      return;
     }
-    if (typeof token === 'string') {
+
+    // parse the cookie
+    token = document.cookie
+      .split('; ')
+      .find((row) => row.startsWith('gtfm_token'))
+      .split('=')[1];
+
+    if (token) {
       // fetch the order from the server
       fetch(`/api/order/${token}`)
         .then((res) => res.json())
@@ -65,7 +65,7 @@ export default function Waiter() {
         "Non è stato possibile identificare il tuo ordine ma non ti preoccupare, è in preparazione. Questo potrebbe essere dovuto al fatto che hai delle estensioni del browser che impediscono l'utilizzo dei cookie."
       );
     }
-  }, []);
+  }
 
   return (
     <div className="flex justify-center">
@@ -81,8 +81,9 @@ export default function Waiter() {
             <button
               onClick={redirectToHome}
               className="bg-amber-500 py-2 px-4 rounded hover:bg-amber-600 grow mr-4"
+              disabled={loading}
             >
-              Fai un nuovo ordine
+              {loading ? 'Caricamento...' : 'Fai un nuovo ordine'}
             </button>
             {/* button to pay the bill */}
             <button
