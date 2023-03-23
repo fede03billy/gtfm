@@ -75,22 +75,26 @@ export default function Waiter() {
           <br />
           {orders.length > 0 && renderOrders(orders)}
         </div>
-        <div className="mt-auto flex w-full pb-4 justify-between gap-4">
-          <button
-            onClick={redirectToHome}
-            className="bg-amber-500 py-2 px-4 rounded hover:bg-amber-600 grow"
-          >
-            Fai un nuovo ordine
-          </button>
-          {/* button to pay the bill */}
-          <button
-            className="bg-amber-500 py-2 px-4 rounded grow opacity-30"
-            disabled
-            //onClick={window.alert('TODO: pay the bill')}
-          >
-            Paga ora
-          </button>
-        </div>
+
+        <footer className="fixed bottom-0 left-0 w-full flex flex-row justify-center align-center bg-amber-50 ">
+          <div className="footerContainer flex flex-row py-4 px-4 sm:px-0 max-w-xl w-full">
+            <button
+              onClick={redirectToHome}
+              className="bg-amber-500 py-2 px-4 rounded hover:bg-amber-600 grow mr-4"
+            >
+              Fai un nuovo ordine
+            </button>
+            {/* button to pay the bill */}
+            <button
+              className="bg-amber-500 py-2 px-4 rounded grow opacity-30"
+              disabled
+              //onClick={window.alert('TODO: pay the bill')}
+            >
+              Paga ora
+            </button>
+          </div>
+        </footer>
+        <div className="mt-auto flex w-full pb-4 justify-between gap-4"></div>
       </div>
     </div>
   );

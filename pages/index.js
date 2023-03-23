@@ -75,7 +75,7 @@ export default function Home(props) {
           <link rel="icon" href="/favicon.ico" />
         </Head>
 
-        <main className="flex flex-col align-top">
+        <main className={`flex flex-col align-top mb-[55px] sm:mb-0`}>
           <div className="sticky top-0 z-10 bg-amber-50 pt-4">
             {' '}
             {/* Container sticky for restaurant title and category list */}
@@ -88,22 +88,38 @@ export default function Home(props) {
           <FoodList food={food} />
         </main>
 
-        <footer className="fixed bottom-0 w-full">
-          <div className="footerContainer bg-amber-50 py-4 flex flex-row gap-4">
+        <footer className="fixed bottom-0 left-0 w-full flex flex-row justify-center align-center bg-amber-50 ">
+          <div className="footerContainer flex flex-row py-4 px-4 sm:px-0 max-w-xl w-full">
             {activeOrder && (
-              <Link href={confirmLink} className="grow">
+              <Link href={confirmLink} className="w-full mr-4">
                 <button
                   id="ordiniAttivi"
-                  className="bg-amber-50 border border-amber-500 py-2 px-4 rounded hover:bg-amber-100 w-full"
+                  className="bg-amber-50 border w-full border-amber-500 py-2 px-4 rounded hover:bg-amber-100 inline"
                 >
                   Ordini Attivi
                 </button>
               </Link>
             )}
-            <Link href={orderLink} className="grow">
+            {/* {activeOrder && (
+              <Link href={orderLink}>
+                <button
+                  id="ordine"
+                  className="bg-amber-500 inline py-2 px-4 rounded hover:bg-amber-600 w-50%"
+                  onClick={() => {
+                    // save the cart in the session storage
+                    if (typeof window !== 'undefined') {
+                      sessionStorage.setItem('cart', JSON.stringify(cart));
+                    }
+                  }}
+                >
+                  {`Ordine (${cart.length})`}
+                </button>
+              </Link>
+            )} */}
+            <Link href={orderLink} className="w-full">
               <button
                 id="ordine"
-                className="bg-amber-500 py-2 px-4 rounded hover:bg-amber-600 w-full"
+                className="bg-amber-500 w-full py-2 px-4 grow rounded hover:bg-amber-600 inline"
                 onClick={() => {
                   // save the cart in the session storage
                   if (typeof window !== 'undefined') {
