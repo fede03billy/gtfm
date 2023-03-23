@@ -84,7 +84,8 @@ export default function Waiter() {
           </button>
           {/* button to pay the bill */}
           <button
-            className="bg-amber-500 py-2 px-4 rounded hover:bg-amber-600 grow"
+            className="bg-amber-500 py-2 px-4 rounded grow opacity-30"
+            disabled
             //onClick={window.alert('TODO: pay the bill')}
           >
             Paga ora
