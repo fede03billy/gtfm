@@ -4,7 +4,7 @@ import FoodList from '../components/foodList';
 import Link from 'next/link';
 import { useCart } from '../components/cartContext';
 import Error from 'next/error';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import createUser from '../util/createUser.js';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -127,7 +127,7 @@ export default function Home(props) {
               >
                 Ordine&nbsp;
                 {cart.length !== 0 && (
-                  <span className="inline-flex items-center justify-center mb-1 h-5 w-5 rounded-full bg-red-600 bg-center text-white text-xs">
+                  <span className="inline-flex items-center justify-center h-4 w-4 rounded-full bg-red-600 bg-center text-white text-xs">
                     {cart.length}
                   </span>
                 )}
