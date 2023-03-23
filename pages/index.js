@@ -76,7 +76,9 @@ export default function Home(props) {
         </Head>
 
         <main className="flex flex-col align-top mb-[70px]">
-          <div className='sticky top-0 z-10 bg-amber-50 pt-4'> {/* Container sticky for restaurant title and category list */}
+          <div className="sticky top-0 z-10 bg-amber-50 pt-4">
+            {' '}
+            {/* Container sticky for restaurant title and category list */}
             <div className="flex justify-between text-4xl font-bold mb-4 px-4">
               <div>{`${restaurantInfo.name}`}</div>
               <div className="font-medium text-lg">{`${table_id}`}</div>
@@ -87,11 +89,9 @@ export default function Home(props) {
         </main>
 
         <footer className="fixed bottom-0 left-0 w-full flex flex-row justify-center align-center bg-amber-50 ">
-          <div className='footerContainer flex flex-row py-4 px-4 sm:px-0 max-w-xl w-full'>
+          <div className="footerContainer flex flex-row py-4 px-4 sm:px-0 max-w-xl w-full">
             {activeOrder && (
-              <Link
-                href={confirmLink}
-                className="w-full mr-4">
+              <Link href={confirmLink} className="w-full mr-4">
                 <button
                   id="ordiniAttivi"
                   className="bg-amber-50 border w-full border-amber-500 py-2 px-4 rounded hover:bg-amber-100 inline"
@@ -116,9 +116,7 @@ export default function Home(props) {
                 </button>
               </Link>
             )} */}
-            <Link
-              href={orderLink}
-              className="w-full">
+            <Link href={orderLink} className="w-full">
               <button
                 id="ordine"
                 className="bg-amber-500 w-full py-2 px-4 grow rounded hover:bg-amber-600 inline"
@@ -130,10 +128,11 @@ export default function Home(props) {
                 }}
               >
                 Ordine&nbsp;
-                <span
-                  className="inline-flex items-center justify-center mb-1 h-5 w-5 rounded-full bg-red-600 bg-center">
-                  {`${cart.length}`}
-                </span>
+                {cart.length !== 0 && (
+                  <span className="inline-flex items-center justify-center mb-1 h-5 w-5 rounded-full bg-red-600 bg-center text-white text-xs">
+                    {cart.length}
+                  </span>
+                )}
               </button>
             </Link>
           </div>
