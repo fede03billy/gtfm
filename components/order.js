@@ -35,7 +35,14 @@ export default function Order({ order }) {
             <span>Tavolo</span> {order.table_id}
           </p>
           <p>
-            Status: <span className="font-bold">in preparazione</span>
+            Status:{' '}
+            <span className="font-bold">
+              {order.delivered
+                ? order.paid
+                  ? 'completo'
+                  : 'da pagare'
+                : 'in preparazione'}
+            </span>
           </p>
           <p>
             <span>Ordine effettuato alle</span>{' '}
