@@ -98,22 +98,6 @@ export default function Home(props) {
                 </button>
               </Link>
             )}
-            {/* {activeOrder && (
-              <Link href={orderLink}>
-                <button
-                  id="ordine"
-                  className="bg-amber-500 inline py-2 px-4 rounded hover:bg-amber-600 w-50%"
-                  onClick={() => {
-                    // save the cart in the session storage
-                    if (typeof window !== 'undefined') {
-                      sessionStorage.setItem('cart', JSON.stringify(cart));
-                    }
-                  }}
-                >
-                  {`Ordine (${cart.length})`}
-                </button>
-              </Link>
-            )} */}
             <Link href={orderLink} className="w-full">
               <button
                 id="ordine"
