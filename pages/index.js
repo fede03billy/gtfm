@@ -117,7 +117,7 @@ export default function Home(props) {
             <Link href={orderLink} className="w-full">
               <button
                 id="ordine"
-                className="bg-amber-500 w-full py-2 px-4 grow rounded hover:bg-amber-600 inline"
+                className="bg-amber-500 w-full py-2 px-4 grow rounded hover:bg-amber-600 inline-flex flex-row justify-center"
                 onClick={() => {
                   // save the cart in the session storage
                   if (typeof window !== 'undefined') {
@@ -125,11 +125,11 @@ export default function Home(props) {
                   }
                 }}
               >
-                Ordine&nbsp;
+                <div>Ordine</div>
                 {cart.length !== 0 && (
-                  <span className="inline-flex items-center justify-center h-4 w-4 rounded-full bg-red-600 bg-center text-white text-xs">
+                  <div className="inline-flex items-center justify-center h-4 w-4 ml-1 mt-1 rounded-full bg-red-600 bg-center text-white text-xs">
                     {cart.length}
-                  </span>
+                  </div>
                 )}
               </button>
             </Link>
