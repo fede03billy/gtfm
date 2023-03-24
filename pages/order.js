@@ -3,13 +3,13 @@
 
 import { useCart, useCartUpdate } from '../components/cartContext';
 import FoodListCart from '../components/foodListCart';
-import Link from 'next/link';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import createUser from '../util/createUser';
 import { v4 as uuidv4 } from 'uuid';
 
 export default function Order() {
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
   const { cart } = useCart();
   const changeCart = useCartUpdate(); // this one has two functions: add2Cart and removeFromCart
@@ -52,6 +52,7 @@ export default function Order() {
     }
 
     const total_price = total.toFixed(2);
+    setLoading(true);
     // send the order to the API
     const res = await fetch('/api/order', {
       method: 'POST',
@@ -70,8 +71,10 @@ export default function Order() {
     if (res.status === 200) {
       // redirect user to the home page
       router.push(`/confirmation?resid=${restaurant_id}&tabid=${table_id}`);
+      setLoading(false);
     } else {
       window.alert('Si è verificato un errore');
+      setLoading(false);
     }
   }
 
@@ -112,19 +115,20 @@ export default function Order() {
         </div>
 
         <footer className="fixed bottom-0 left-0 w-full flex flex-row justify-center align-center bg-amber-50 ">
-          <div className='footerContainer flex flex-row py-4 px-4 sm:px-0 max-w-xl w-full'>
-          <button
-            className="bg-amber-500 hover:bg-amber-600 py-2 px-4 rounded grow mr-4"
-            onClick={getBack}
-          >
-            Ordina altro
-          </button>
-          <button
-            className="bg-amber-500 py-2 px-4 rounded hover:bg-amber-600 grow"
-            onClick={sendOrder}
-          >
-            Invia Ordine
-          </button>
+          <div className="footerContainer flex flex-row py-4 px-4 sm:px-0 max-w-xl w-full">
+            <button
+              className="bg-amber-500 hover:bg-amber-600 py-2 px-4 rounded grow mr-4"
+              onClick={getBack}
+            >
+              Ordina altro
+            </button>
+            <button
+              className="bg-amber-500 py-2 px-4 rounded hover:bg-amber-600 grow"
+              onClick={sendOrder}
+              disabled={loading}
+            >
+              {loading ? 'Caricamento...' : 'Invia Ordine'}
+            </button>
           </div>
         </footer>
 
