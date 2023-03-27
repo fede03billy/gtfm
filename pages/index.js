@@ -23,9 +23,9 @@ export default function Home(props) {
   };
 
   const handleStop = () => {
-    const snapThreshold = 250;
+    const snapThreshold = 200;
     const upperPosition = 0;
-    const lowerPosition = -500;
+    const lowerPosition = -400;
 
     if (Math.abs(position.y - upperPosition) < snapThreshold) {
       setPosition({ y: upperPosition });
@@ -102,7 +102,7 @@ export default function Home(props) {
               <div>{`${restaurantInfo.name}`}</div>
               <div
                 className="font-medium text-lg"
-                onClick={() => setPosition({ y: 500 })}
+                onClick={() => setPosition({ y: -400 })}
               >
                 Tavolo {`${table_id}`}
               </div>
@@ -115,7 +115,7 @@ export default function Home(props) {
         <footer className="fixed bottom-0 left-0 w-full flex flex-row justify-center align-center bg-amber-50 ">
           <Draggable
             axis="y"
-            bounds={{ top: -500, bottom: 0 }} // Set this value according to the lower boundary you want
+            bounds={{ top: -400, bottom: 0 }} // Set this value according to the lower boundary you want
             position={{ x: 0, y: position.y }}
             onDrag={handleDrag}
             onStop={handleStop}
@@ -124,10 +124,10 @@ export default function Home(props) {
               elevation={3}
               sx={{
                 position: 'fixed',
-                bottom: '-400px',
+                bottom: '-420px',
                 left: 0,
                 right: 0,
-                height: '600px',
+                height: '500px',
                 background: 'white', // change color
                 zIndex: 50,
               }}
