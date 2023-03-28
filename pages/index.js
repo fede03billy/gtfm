@@ -83,11 +83,6 @@ export default function Home(props) {
 
   // function to send the order to the API
   async function sendOrder() {
-    if (cart?.length === 0 || !cart) {
-      window.alert('Il carrello è vuoto');
-      return;
-    }
-
     if (position.y !== -400) {
       const element = document.getElementById('footer-card');
       element.style.transition = 'all 0.3s ease-out'; // snap smoothly to the top or bottom
@@ -102,6 +97,13 @@ export default function Home(props) {
       return;
     }
 
+    if (cart?.length === 0 || !cart) {
+      window.alert('Il carrello è vuoto');
+      return;
+    }
+
+    setLoading(true);
+
     const token = document.cookie
       .split('; ')
       .find((row) => row.startsWith('gtfm_token'))
@@ -115,6 +117,7 @@ export default function Home(props) {
       window.alert(
         'Non è stato possibile identificare il tuo ordine, chiedi allo staff se è stato ricevuto.'
       );
+      setLoading(false);
       return;
     }
 
@@ -124,7 +127,6 @@ export default function Home(props) {
         typeof total == 'number'
           ? total.toFixed(2)
           : parseFloat(total).toFixed(2);
-      setLoading(true);
       // send the order to the API
       const res = await fetch('/api/order', {
         method: 'POST',
@@ -148,6 +150,9 @@ export default function Home(props) {
         window.alert('Si è verificato un errore');
         setLoading(false);
       }
+    } else {
+      setLoading(false);
+      return;
     }
   }
 
@@ -233,7 +238,7 @@ export default function Home(props) {
             e.target.classList.toggle('pointer-events-none');
             document.body.style.overflow = 'auto';
           }}
-          className="h-screen w-screen fixed top-0 left-0 bg-black bg-opacity-0 transition"
+          className="h-screen w-screen fixed top-0 left-0 bg-black bg-opacity-0 transition pointer-events-none"
         ></div>
         <footer className="fixed bottom-0 left-0 w-full flex flex-row justify-center align-center bg-amber-50 z-50">
           <Draggable
