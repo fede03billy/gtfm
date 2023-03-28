@@ -93,9 +93,9 @@ export default function Home(props) {
       element.style.transition = 'all 0.3s ease-out'; // snap smoothly to the top or bottom
       setPosition({ y: -400 });
       const bg = document.getElementById('darken-bg');
-      bg.classList.remove('bg-opacity-30');
-      bg.classList.add('bg-opacity-0');
-      bg.classList.add('pointer-events-none');
+      bg.classList.add('bg-opacity-30');
+      bg.classList.remove('bg-opacity-0');
+      bg.classList.remove('pointer-events-none');
       setTimeout(() => {
         element.style.transition = 'none';
       }, 300);
