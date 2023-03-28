@@ -7,9 +7,7 @@ import Error from 'next/error';
 import { useState } from 'react';
 import createUser from '../util/createUser.js';
 import { v4 as uuidv4 } from 'uuid';
-import { Paper } from '@mui/material';
 import Draggable from 'react-draggable';
-import { waitUntilSymbol } from 'next/dist/server/web/spec-extension/fetch-event';
 
 export default function Home(props) {
   const { restaurantInfo, restaurant_id, table_id, food } = props;
@@ -111,18 +109,14 @@ export default function Home(props) {
         </Head>
 
         <main id="main" className="flex flex-col align-top mb-[70px]">
-          <Paper
-            elevation={3}
-            className="sticky top-0 bg-amber-50 pt-4 w-screen px-4"
-            sx={{ zIndex: 500, borderRadius: '0px' }}
-          >
+          <div className="sticky top-0 bg-amber-50 pt-4 w-screen px-4 z-50 shadow-md">
             {/* Container sticky for restaurant title and category list */}
             <div className="flex justify-between text-4xl font-bold mb-4 px-4">
               <div>{`${restaurantInfo.name}`}</div>
               <div className="font-medium text-lg">Tavolo {`${table_id}`}</div>
             </div>
             <Categories food={food} />
-          </Paper>
+          </div>
           <FoodList food={food} />
         </main>
 
@@ -141,7 +135,7 @@ export default function Home(props) {
           }}
           className="h-screen w-screen fixed top-0 left-0 bg-black bg-opacity-0 transition"
         ></div>
-        <footer className="fixed bottom-0 left-0 w-full flex flex-row justify-center align-center bg-amber-50 ">
+        <footer className="fixed bottom-0 left-0 w-full flex flex-row justify-center align-center bg-amber-50 z-50">
           <Draggable
             axis="y"
             bounds={{ top: -400, bottom: 0 }}
@@ -149,20 +143,9 @@ export default function Home(props) {
             onDrag={handleDrag}
             onStop={handleStop}
           >
-            <Paper
+            <div
               id="footer-card"
-              elevation={3}
-              sx={{
-                position: 'fixed',
-                bottom: '-420px',
-                left: 0,
-                right: 0,
-                borderRadius: '0px',
-                height: '500px',
-                background: 'rgb(255 251 235)', // change color
-                zIndex: 500,
-              }}
-              className="footerContainer flex flex-row py-4 px-4 sm:px-0 max-w-xl w-full"
+              className="footerContainer flex flex-row py-4 px-4 sm:px-0 max-w-xl w-full fixed left-0 bottom-[-420px] h-[500px] bg-amber-50 shadow-md"
             >
               {activeOrder && (
                 <Link href={confirmLink} className="w-full mr-4">
@@ -193,7 +176,7 @@ export default function Home(props) {
                   )}
                 </button>
               </Link>
-            </Paper>
+            </div>
           </Draggable>
         </footer>
       </div>
