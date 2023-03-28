@@ -68,20 +68,23 @@ export default function Waiter() {
   }
 
   return (
-    <div className="flex justify-center">
-      <div className="flex flex-col h-screen w-screen max-w-xl font-serif p-4 mb-[70px]">
+    <div className="flex justify-center bg-amber-50">
+      <div className="flex flex-col h-[90vh] w-screen max-w-xl font-serif p-4 mb-[70px]">
         <div>
           <div className="flex flex-row w-full justify-center">
             <img
               src="https://www.svgrepo.com/show/497435/receipt-item.svg"
               className="w-8 h-8 mr-2"
             />
-            <h1 className="text-2xl font-bold text-center">I tuoi ordini</h1>
+            <h1 className="text-2xl font-title text-center">I tuoi ordini</h1>
           </div>
           {orders.length > 0 && renderOrders(orders)}
         </div>
 
-        <footer className="fixed bottom-0 left-0 w-full flex flex-row justify-center align-center bg-amber-50 ">
+        <footer
+          id="footer-buttons"
+          className="fixed bottom-0 left-0 w-full flex flex-row justify-center align-center bg-amber-50 "
+        >
           <div className="footerContainer flex flex-row py-4 px-4 sm:px-0 max-w-xl w-full">
             <button
               onClick={redirectToHome}
