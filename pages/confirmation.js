@@ -71,8 +71,13 @@ export default function Waiter() {
     <div className="flex justify-center">
       <div className="flex flex-col h-screen w-screen max-w-xl font-serif p-4 mb-[70px]">
         <div>
-          Il tuo ordine è in preparazione.
-          <br />
+          <div className="flex flex-row w-full justify-center">
+            <img
+              src="https://www.svgrepo.com/show/497435/receipt-item.svg"
+              className="w-8 h-8 mr-2"
+            />
+            <h1 className="text-2xl font-bold text-center">I tuoi ordini</h1>
+          </div>
           {orders.length > 0 && renderOrders(orders)}
         </div>
 

@@ -9,15 +9,17 @@ import { useState, useEffect } from 'react';
 import createUser from '../util/createUser.js';
 import { v4 as uuidv4 } from 'uuid';
 import Draggable from 'react-draggable';
+import { useRouter } from 'next/router';
 
 export default function Home(props) {
   const { restaurantInfo, restaurant_id, table_id, food } = props;
   const { cart } = useCart();
-  const orderLink = `/order?resid=${restaurant_id}&tabid=${table_id}`;
+  const router = useRouter();
   const confirmLink = `/confirmation?resid=${restaurant_id}&tabid=${table_id}`;
   const [activeOrder, setActiveOrder] = useState(false);
   const [position, setPosition] = useState({ y: 0 });
   const [total, setTotal] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   const handleDrag = (e, newPosition) => {
     setPosition({ y: newPosition.y });
@@ -38,12 +40,14 @@ export default function Home(props) {
       bg.classList.remove('bg-opacity-30');
       bg.classList.add('bg-opacity-0');
       bg.classList.add('pointer-events-none');
+      document.body.style.overflow = 'auto';
     } else if (Math.abs(position.y - lowerPosition) < snapThreshold) {
       setPosition({ y: lowerPosition });
       const bg = document.getElementById('darken-bg');
       bg.classList.remove('bg-opacity-0');
       bg.classList.add('bg-opacity-30');
       bg.classList.remove('pointer-events-none');
+      document.body.style.overflow = 'hidden';
     }
 
     // remove transition after the element has been moved
@@ -75,6 +79,76 @@ export default function Home(props) {
       total += item.price / 100; // here we do not account for the quantity
     });
     return total.toFixed(2);
+  }
+
+  // function to send the order to the API
+  async function sendOrder() {
+    if (cart?.length === 0 || !cart) {
+      window.alert('Il carrello è vuoto');
+      return;
+    }
+
+    if (position.y !== -400) {
+      const element = document.getElementById('footer-card');
+      element.style.transition = 'all 0.3s ease-out'; // snap smoothly to the top or bottom
+      setPosition({ y: -400 });
+      const bg = document.getElementById('darken-bg');
+      bg.classList.remove('bg-opacity-30');
+      bg.classList.add('bg-opacity-0');
+      bg.classList.add('pointer-events-none');
+      setTimeout(() => {
+        element.style.transition = 'none';
+      }, 300);
+      return;
+    }
+
+    const token = document.cookie
+      .split('; ')
+      .find((row) => row.startsWith('gtfm_token'))
+      .split('=')[1];
+
+    const { user_id } = await fetch(`/api/user/${token}`)
+      .then((res) => res.json())
+      .catch((err) => console.error(err));
+
+    if (!user_id) {
+      window.alert(
+        'Non è stato possibile identificare il tuo ordine, chiedi allo staff se è stato ricevuto.'
+      );
+      return;
+    }
+
+    const confirm = window.confirm("Inviare l'ordine?");
+    if (confirm) {
+      const total_price =
+        typeof total == 'number'
+          ? total.toFixed(2)
+          : parseFloat(total).toFixed(2);
+      setLoading(true);
+      // send the order to the API
+      const res = await fetch('/api/order', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          restaurant_id,
+          table_id,
+          cart,
+          user_id,
+          total_price,
+        }),
+      });
+      // if the order is sent successfully, clear the cart
+      if (res.status === 200) {
+        // redirect user to the home page
+        router.push(`/confirmation?resid=${restaurant_id}&tabid=${table_id}`);
+        setLoading(false);
+      } else {
+        window.alert('Si è verificato un errore');
+        setLoading(false);
+      }
+    }
   }
 
   useEffect(() => {
@@ -170,34 +244,35 @@ export default function Home(props) {
               id="footer-card"
               className="footerContainer flex flex-col items-center py-4 px-4 sm:px-0 max-w-xl w-full fixed left-0 bottom-[-420px] h-[500px] bg-amber-50 z-50"
             >
-              <div className="w-10 rounded-full bg-amber-300 h-1.5 mb-2 my-[-6px]"></div>
-              <div className="flex flex-col rounded p-4 bg-amber-100 mb-4">
-                <FoodListCart cart={cart} />
-                <div className="h-px bg-amber-900 my-4"></div>
-                <div className="flex justify-between">
-                  <p className="text-xl">Total</p>
-                  <p className="text-xl">{total}€</p>
+              <div className="footerHandle w-10 rounded-full bg-amber-300 h-1.5 mb-2 my-[-6px]"></div>
+              <button
+                id="ordine"
+                className="need-interaction bg-amber-500 w-full h-10 py-2 px-4 rounded hover:bg-amber-600 inline-flex flex-row justify-center cursor-pointer"
+                onClick={() => {
+                  sendOrder();
+                }}
+              >
+                <div>{loading ? 'Caricamento...' : 'Ordina'}</div>
+                {cart.length !== 0 && (
+                  <div className="inline-flex items-center justify-center h-4 w-4 ml-1 mt-1 rounded-full bg-red-600 bg-center text-white text-xs">
+                    {cart.length}
+                  </div>
+                )}
+              </button>
+              {cart.length > 0 ? (
+                <div className="flex flex-col rounded p-4 bg-amber-100 my-4 w-full">
+                  <FoodListCart cart={cart} />
+                  <div className="h-px bg-amber-900 my-4"></div>
+                  <div className="flex justify-between">
+                    <p className="text-xl">Total</p>
+                    <p className="text-xl">{total}€</p>
+                  </div>
                 </div>
-              </div>
-              <Link href={orderLink} className="w-full">
-                <button
-                  id="ordine"
-                  className="need-interaction bg-amber-500 w-full py-2 px-4 grow rounded hover:bg-amber-600 inline-flex flex-row justify-center cursor-pointer"
-                  onClick={() => {
-                    // save the cart in the session storage
-                    if (typeof window !== 'undefined') {
-                      sessionStorage.setItem('cart', JSON.stringify(cart));
-                    }
-                  }}
-                >
-                  <div>Ordine</div>
-                  {cart.length !== 0 && (
-                    <div className="inline-flex items-center justify-center h-4 w-4 ml-1 mt-1 rounded-full bg-red-600 bg-center text-white text-xs">
-                      {cart.length}
-                    </div>
-                  )}
-                </button>
-              </Link>
+              ) : (
+                <div className="text-black opacity-30 mt-44 text-sm">
+                  Non c'è ancora nulla nel tuo carrello.
+                </div>
+              )}
             </div>
           </Draggable>
         </footer>

@@ -24,7 +24,7 @@ export default function FoodList(props) {
   const modifiedCart = prepareCart(cart);
 
   return (
-    <div>
+    <div className="need-interaction relative overflow-y-auto overscroll-contain overflow-hidden scroll-smooth max-h-[290px]">
       {modifiedCart.map((item, index) => {
         return <FoodItemCart item={item} key={index} />;
       })}
