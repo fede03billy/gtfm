@@ -10,9 +10,9 @@ export default function FoodItem(props) {
       <div className="bg-amber-100 rounded-lg p-4 mt-4 w-full">
         <div className="flex flex-row justify-between items-center">
           <div className="w-3/4">
-            <div className="text-xl font-bold">{item.name}</div>
-            <div className="text-md font-medium">{item.price / 100} €</div>
-            <div className="text-md font-light font-isra">
+            <div className="text-xl font-subtitle">{item.name}</div>
+            <div className="text-md">{item.price / 100} €</div>
+            <div className="text-xs font-light font-description">
               {item.description}
             </div>
           </div>

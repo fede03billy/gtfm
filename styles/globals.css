@@ -102,12 +102,18 @@ a {
   src: url("../public/fonts/IsraRegular.ttf");
 }
 
-.font-poppins {
-  font-family: Poppins;
+.font-title {
+  font-weight: 700;
+  letter-spacing: -1px;
 }
 
-.font-isra {
-  font-family: Isra;
+.font-subtitle {
+  font-weight: 500;
+  letter-spacing: -1px;
+}
+
+.font-description {
+  font-weight: 300;
 }
 
 /* For Webkit-based browsers (Chrome, Safari and Opera) */
@@ -148,6 +154,12 @@ main {
 -webkit-box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.1) 0px -4px 6px -1px, rgba(0, 0, 0, 0.1) 0px 2px 4px -2px;
 -moz-box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.1) 0px -4px 6px -1px, rgba(0, 0, 0, 0.1) 0px 2px 4px -2px;
 box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.1) 0px -4px 6px -1px, rgba(0, 0, 0, 0.1) 0px 2px 4px -2px;
+}
+
+#footer-buttons {
+  -webkit-box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.1) 0px -4px 6px -1px, rgba(0, 0, 0, 0.1) 0px 2px 4px -2px;
+  -moz-box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.1) 0px -4px 6px -1px, rgba(0, 0, 0, 0.1) 0px 2px 4px -2px;
+  box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.1) 0px -4px 6px -1px, rgba(0, 0, 0, 0.1) 0px 2px 4px -2px;
 }
 
 .categories::after {

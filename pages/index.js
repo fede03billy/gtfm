@@ -182,30 +182,6 @@ export default function Home(props) {
     }
   }
 
-  if (typeof window !== 'undefined' || typeof document !== 'undefined') {
-    function adjustFontSize(element) {
-      const maxHeight = element.offsetHeight;
-      const maxWidth = element.offsetWidth;
-
-      // Imposta la dimensione del font iniziale
-      let fontSize = 36; // In pixel, ad esempio
-      element.style.fontSize = fontSize + 'px';
-
-      // Continua a ridurre la dimensione del font finché il contenuto si adatta al div
-      while (
-        element.scrollHeight > maxHeight ||
-        element.scrollWidth > maxWidth
-      ) {
-        fontSize -= 0.5; // Riduci la dimensione del font di mezzo pixel alla volta
-        element.style.fontSize = fontSize + 'px';
-      }
-    }
-
-    // Chiama la funzione adjustFontSize passando il tuo div
-    const dynamicTextElement = document.getElementById('restaurantName');
-    adjustFontSize(dynamicTextElement);
-  }
-
   // check if there are no restaurant_id and table_if, in that case we will show a 404 page
   if (!restaurant_id || !table_id) {
     return <Error statusCode={404} />;

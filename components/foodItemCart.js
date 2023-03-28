@@ -9,10 +9,10 @@ export default function FoodItemCart(props) {
   return (
     <div key={index} className="flex justify-between mb-4">
       <div className="flex flex-col">
-        <div className="text-xl">
+        <div className="text-xl font-subtitle">
           {item.name} ({item.quantity})
         </div>
-        <div className="text-sm">
+        <div className="text-md">
           {((item.price * item.quantity) / 100).toFixed(2)}€
         </div>
       </div>
