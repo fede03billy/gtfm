@@ -9,6 +9,7 @@ import createUser from '../util/createUser.js';
 import { v4 as uuidv4 } from 'uuid';
 import { Paper } from '@mui/material';
 import Draggable from 'react-draggable';
+import { waitUntilSymbol } from 'next/dist/server/web/spec-extension/fetch-event';
 
 export default function Home(props) {
   const { restaurantInfo, restaurant_id, table_id, food } = props;
@@ -27,11 +28,28 @@ export default function Home(props) {
     const upperPosition = 0;
     const lowerPosition = -400;
 
+    // add transition to the element
+    const element = document.getElementById('footer-card');
+    element.style.transition = 'all 0.3s ease-out'; // snap smoothly to the top or bottom
+
     if (Math.abs(position.y - upperPosition) < snapThreshold) {
       setPosition({ y: upperPosition });
+      const bg = document.getElementById('darken-bg');
+      bg.classList.remove('bg-opacity-30');
+      bg.classList.add('bg-opacity-0');
+      bg.classList.add('pointer-events-none');
     } else if (Math.abs(position.y - lowerPosition) < snapThreshold) {
       setPosition({ y: lowerPosition });
+      const bg = document.getElementById('darken-bg');
+      bg.classList.remove('bg-opacity-0');
+      bg.classList.add('bg-opacity-30');
+      bg.classList.remove('pointer-events-none');
     }
+
+    // remove transition after the element has been moved
+    setTimeout(() => {
+      element.style.transition = 'none';
+    }, 300);
   };
 
   // in this part of the code the category provider is not initialized yet,
@@ -92,44 +110,57 @@ export default function Home(props) {
           <link rel="icon" href="/favicon.ico" />
         </Head>
 
-        <main className="flex flex-col align-top mb-[70px]">
+        <main id="main" className="flex flex-col align-top mb-[70px]">
           <Paper
             elevation={3}
-            className="sticky top-0 z-10 bg-amber-50 pt-4 w-screen px-4"
+            className="sticky top-0 bg-amber-50 pt-4 w-screen px-4"
+            sx={{ zIndex: 500, borderRadius: '0px' }}
           >
             {/* Container sticky for restaurant title and category list */}
             <div className="flex justify-between text-4xl font-bold mb-4 px-4">
               <div>{`${restaurantInfo.name}`}</div>
-              <div
-                className="font-medium text-lg"
-                onClick={() => setPosition({ y: -400 })}
-              >
-                Tavolo {`${table_id}`}
-              </div>
+              <div className="font-medium text-lg">Tavolo {`${table_id}`}</div>
             </div>
             <Categories food={food} />
           </Paper>
           <FoodList food={food} />
         </main>
 
+        <div
+          id="darken-bg"
+          onClick={(e) => {
+            const element = document.getElementById('footer-card');
+            element.style.transition = 'all 0.3s ease-out'; // snap smoothly to the bottom
+            setPosition({ y: 0 });
+            setTimeout(() => {
+              element.style.transition = 'none';
+            }, 300);
+            e.target.classList.add('bg-opacity-0');
+            e.target.classList.remove('bg-opacity-30');
+            e.target.classList.toggle('pointer-events-none');
+          }}
+          className="h-screen w-screen fixed top-0 left-0 bg-black bg-opacity-0 transition"
+        ></div>
         <footer className="fixed bottom-0 left-0 w-full flex flex-row justify-center align-center bg-amber-50 ">
           <Draggable
             axis="y"
-            bounds={{ top: -400, bottom: 0 }} // Set this value according to the lower boundary you want
+            bounds={{ top: -400, bottom: 0 }}
             position={{ x: 0, y: position.y }}
             onDrag={handleDrag}
             onStop={handleStop}
           >
             <Paper
+              id="footer-card"
               elevation={3}
               sx={{
                 position: 'fixed',
                 bottom: '-420px',
                 left: 0,
                 right: 0,
+                borderRadius: '0px',
                 height: '500px',
-                background: 'white', // change color
-                zIndex: 50,
+                background: 'rgb(255 251 235)', // change color
+                zIndex: 500,
               }}
               className="footerContainer flex flex-row py-4 px-4 sm:px-0 max-w-xl w-full"
             >
@@ -146,7 +177,7 @@ export default function Home(props) {
               <Link href={orderLink} className="w-full">
                 <button
                   id="ordine"
-                  className="bg-amber-500 w-full py-2 px-4 grow rounded hover:bg-amber-600 inline-flex flex-row justify-center"
+                  className="bg-amber-500 w-full py-2 px-4 grow rounded hover:bg-amber-600 inline-flex flex-row justify-center cursor-pointer"
                   onClick={() => {
                     // save the cart in the session storage
                     if (typeof window !== 'undefined') {
@@ -164,31 +195,6 @@ export default function Home(props) {
               </Link>
             </Paper>
           </Draggable>
-          {/* <Draggable
-            axis="y"
-            handle=".handle"
-            bounds={{ top: '75vh', bottom: 0 }}
-            onDrag={handleDrag}
-          >
-            <div>
-              <Paper
-                elevation={3}
-                className="handle"
-                sx={{
-                  position: 'fixed',
-                  bottom: open ? 0 : 'calc(100% - 25vh)',
-                  left: 0,
-                  right: 0,
-                  height: '25vh',
-                  borderRadius: '16px 16px 0 0',
-                  background: 'white',
-                  zIndex: 1201,
-                  cursor: 'ns-resize',
-                }}
-              ></Paper>
-              {drawerContent}
-            </div>
-          </Draggable> */}
         </footer>
       </div>
     </div>
