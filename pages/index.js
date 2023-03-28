@@ -196,7 +196,7 @@ export default function Home(props) {
           <link rel="icon" href="/favicon.ico" />
         </Head>
 
-        <main id="main" className="flex flex-col align-top mb-[70px]">
+        <main id="main" className="flex flex-col align-top mb-[100px]">
           <div className="sticky top-0 bg-amber-50 pt-4 w-screen px-4 z-50 shadow-md max-w-xl">
             {/* Container sticky for restaurant title and category list */}
             <div className="flex justify-between text-4xl font-bold mb-4 px-4">
