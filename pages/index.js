@@ -142,11 +142,13 @@ export default function Home(props) {
             position={{ x: 0, y: position.y }}
             onDrag={handleDrag}
             onStop={handleStop}
+            cancel={'.need-interaction'}
           >
             <div
               id="footer-card"
-              className="footerContainer flex flex-row py-4 px-4 sm:px-0 max-w-xl w-full fixed left-0 bottom-[-420px] h-[500px] bg-amber-50 shadow-md"
+              className="footerContainer flex flex-col items-center py-4 px-4 sm:px-0 max-w-xl w-full fixed left-0 bottom-[-420px] h-[500px] bg-amber-50 z-50"
             >
+              <div className="w-10 rounded-full bg-amber-300 h-1.5 mb-2 my-[-6px]"></div>
               {activeOrder && (
                 <Link href={confirmLink} className="w-full mr-4">
                   <button
@@ -160,7 +162,7 @@ export default function Home(props) {
               <Link href={orderLink} className="w-full">
                 <button
                   id="ordine"
-                  className="bg-amber-500 w-full py-2 px-4 grow rounded hover:bg-amber-600 inline-flex flex-row justify-center cursor-pointer"
+                  className="need-interaction bg-amber-500 w-full py-2 px-4 grow rounded hover:bg-amber-600 inline-flex flex-row justify-center cursor-pointer"
                   onClick={() => {
                     // save the cart in the session storage
                     if (typeof window !== 'undefined') {
