@@ -256,12 +256,20 @@ export default function Home(props) {
               <div className="footerHandle w-10 rounded-full bg-amber-300 h-1.5 mb-2 my-[-6px]"></div>
               <button
                 id="ordine"
-                className="need-interaction bg-amber-500 w-full h-10 py-2 px-4 rounded hover:bg-amber-600 inline-flex flex-row justify-center cursor-pointer"
+                className="need-interaction font-subtitle bg-amber-500 w-full h-10 py-2 px-4 rounded hover:bg-amber-600 inline-flex flex-row justify-center cursor-pointer"
                 onClick={() => {
                   sendOrder();
                 }}
               >
-                <div>{loading ? 'Caricamento...' : 'Ordina'}</div>
+                <div>
+                  {loading
+                    ? 'Caricamento...'
+                    : position.y === -400
+                    ? cart.length > 0
+                      ? `Conferma l'ordine`
+                      : 'Ordina'
+                    : 'Ordina'}
+                </div>
                 {cart.length !== 0 && (
                   <div className="inline-flex items-center justify-center h-4 w-4 ml-1 mt-1 rounded-full bg-red-600 bg-center text-white text-xs">
                     {cart.length}

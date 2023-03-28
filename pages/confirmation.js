@@ -88,14 +88,14 @@ export default function Waiter() {
           <div className="footerContainer flex flex-row py-4 px-4 sm:px-0 max-w-xl w-full">
             <button
               onClick={redirectToHome}
-              className="bg-amber-500 py-2 px-4 rounded hover:bg-amber-600 grow mr-4"
+              className="bg-amber-500 py-2 px-4 rounded hover:bg-amber-600 grow mr-4 font-subtitle"
               disabled={loading}
             >
               {loading ? 'Caricamento...' : 'Fai un nuovo ordine'}
             </button>
             {/* button to pay the bill */}
             <button
-              className="bg-amber-500 py-2 px-4 rounded grow opacity-30"
+              className="bg-amber-500 py-2 px-4 rounded grow opacity-30 font-subtitle"
               disabled
               //onClick={window.alert('TODO: pay the bill')}
             >
