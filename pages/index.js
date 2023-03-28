@@ -1,10 +1,11 @@
 import Head from 'next/head';
 import Categories from '../components/categories';
 import FoodList from '../components/foodList';
+import FoodListCart from '../components/foodListCart';
 import Link from 'next/link';
 import { useCart } from '../components/cartContext';
 import Error from 'next/error';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import createUser from '../util/createUser.js';
 import { v4 as uuidv4 } from 'uuid';
 import Draggable from 'react-draggable';
@@ -16,6 +17,7 @@ export default function Home(props) {
   const confirmLink = `/confirmation?resid=${restaurant_id}&tabid=${table_id}`;
   const [activeOrder, setActiveOrder] = useState(false);
   const [position, setPosition] = useState({ y: 0 });
+  const [total, setTotal] = useState(0);
 
   const handleDrag = (e, newPosition) => {
     setPosition({ y: newPosition.y });
@@ -67,6 +69,18 @@ export default function Home(props) {
       });
   }
 
+  function getTotalPrice() {
+    let total = 0;
+    cart.forEach((item) => {
+      total += item.price / 100; // here we do not account for the quantity
+    });
+    return total.toFixed(2);
+  }
+
+  useEffect(() => {
+    setTotal(getTotalPrice());
+  }, [cart]);
+
   // check if there's a token in the cookie, if not we create a uuid and save it in the cookie, and also in the database as a user
   if (typeof window !== 'undefined' || typeof document !== 'undefined') {
     if (document.cookie.includes('gtfm_token')) {
@@ -113,7 +127,15 @@ export default function Home(props) {
             {/* Container sticky for restaurant title and category list */}
             <div className="flex justify-between text-4xl font-bold mb-4 px-4">
               <div>{`${restaurantInfo.name}`}</div>
-              <div className="font-medium text-lg">Tavolo {`${table_id}`}</div>
+              {/* <div className="font-medium text-lg">Tavolo {`${table_id}`}</div> */}
+              {activeOrder && (
+                <Link href={confirmLink}>
+                  <img
+                    src="https://www.svgrepo.com/show/497435/receipt-item.svg"
+                    className="w-8 h-8 ml-auto mt-1.5 mr-2"
+                  />
+                </Link>
+              )}
             </div>
             <Categories food={food} />
           </div>
@@ -149,16 +171,14 @@ export default function Home(props) {
               className="footerContainer flex flex-col items-center py-4 px-4 sm:px-0 max-w-xl w-full fixed left-0 bottom-[-420px] h-[500px] bg-amber-50 z-50"
             >
               <div className="w-10 rounded-full bg-amber-300 h-1.5 mb-2 my-[-6px]"></div>
-              {activeOrder && (
-                <Link href={confirmLink} className="w-full mr-4">
-                  <button
-                    id="ordiniAttivi"
-                    className="bg-amber-50 border w-full border-amber-500 py-2 px-4 rounded hover:bg-amber-100 inline"
-                  >
-                    Ordini Attivi
-                  </button>
-                </Link>
-              )}
+              <div className="flex flex-col rounded p-4 bg-amber-100 mb-4">
+                <FoodListCart cart={cart} />
+                <div className="h-px bg-amber-900 my-4"></div>
+                <div className="flex justify-between">
+                  <p className="text-xl">Total</p>
+                  <p className="text-xl">{total}€</p>
+                </div>
+              </div>
               <Link href={orderLink} className="w-full">
                 <button
                   id="ordine"
