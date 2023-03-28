@@ -82,3 +82,14 @@ main {
 -moz-box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.1) 0px -4px 6px -1px, rgba(0, 0, 0, 0.1) 0px 2px 4px -2px;
 box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.1) 0px -4px 6px -1px, rgba(0, 0, 0, 0.1) 0px 2px 4px -2px;
 }
+
+.categories::after {
+  content: '';
+  height: 40px;
+  width: 16px;
+  background:linear-gradient(90deg, transparent, rgb(255 251 235));
+  z-index: 500;
+  position: absolute;
+  right: 0;
+  top: 112;
+}

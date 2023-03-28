@@ -30,7 +30,7 @@ export default function Categories(props) {
   }, [categories]);
 
   return (
-    <div className="scrollbar-hide flex w-100 overflow-x-auto overflow-hidden scroll-smooth h-10">
+    <div className="categories scrollbar-hide flex w-100 overflow-x-auto overflow-hidden scroll-smooth h-10 whitespace-nowrap mr-[-16px]">
       {Array.from(categories).map((item, index) => (
         <button
           className="category bg-amber-50 py-2 px-4 hover:bg-amber-100 border-amber-600"
@@ -39,8 +39,7 @@ export default function Categories(props) {
           }}
           key={index}
         >
-          {' '}
-          {item}{' '}
+          {item}
         </button>
       ))}
     </div>
