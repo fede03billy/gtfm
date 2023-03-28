@@ -228,6 +228,7 @@ export default function Home(props) {
             e.target.classList.add('bg-opacity-0');
             e.target.classList.remove('bg-opacity-30');
             e.target.classList.toggle('pointer-events-none');
+            document.body.style.overflow = 'auto';
           }}
           className="h-screen w-screen fixed top-0 left-0 bg-black bg-opacity-0 transition"
         ></div>
