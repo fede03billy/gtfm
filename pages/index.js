@@ -187,6 +187,13 @@ export default function Home(props) {
     return <Error statusCode={404} />;
   }
 
+  // save the cart in the session storage onbeforeunload
+  useEffect(() => {
+    window.onbeforeunload = () => {
+      sessionStorage.setItem('gtfm_cart', JSON.stringify(cart));
+    };
+  }, [cart]);
+
   return (
     <div className="flex justify-center">
       <div className="mainContainer flex flex-col h-full w-full max-w-xl bg-amber-50 font-poppins">
