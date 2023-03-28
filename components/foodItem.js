@@ -12,7 +12,7 @@ export default function FoodItem(props) {
           <div className="w-3/4">
             <div className="text-xl font-bold">{item.name}</div>
             <div className="text-md font-medium">{item.price / 100} €</div>
-            <div className="text-sm font-light font-sans">
+            <div className="text-md font-light font-isra">
               {item.description}
             </div>
           </div>
