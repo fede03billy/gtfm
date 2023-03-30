@@ -172,6 +172,8 @@ export default function Home(props) {
       });
       // if the order is sent successfully, clear the cart
       if (res.status === 200) {
+        // give the body the overflow auto in case some button magic removed it by mistake
+        document.body.style.overflow = 'auto';
         // redirect user to the home page
         router.push(`/confirmation?resid=${restaurant_id}&tabid=${table_id}`);
         setLoading(false);
