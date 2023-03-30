@@ -287,7 +287,7 @@ export default function Home(props) {
                 </div>
               ) : (
                 <div className="text-black opacity-30 mt-44 text-sm">
-                  Non c&apos;è ancora nulla nel tuo carrello.
+                  Non c&apos;è nulla nel tuo carrello.
                 </div>
               )}
             </div>
