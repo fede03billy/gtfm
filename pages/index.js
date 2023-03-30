@@ -100,10 +100,29 @@ export default function Home(props) {
     }
   }
 
+  function splitButtons() {
+    const button = document.getElementById('ordine');
+    const closeButton = document.getElementById('close-button');
+    setTimeout(() => {
+      closeButton.style.opacity = '1';
+    }, 50);
+    button.style.width = '48%';
+    closeButton.style.zIndex = '0';
+  }
+
+  function hideButtons() {
+    const button = document.getElementById('ordine');
+    const closeButton = document.getElementById('close-button');
+    button.style.width = '100%';
+    closeButton.style.zIndex = '-1';
+    closeButton.style.opacity = '0';
+  }
+
   // function to send the order to the API
   async function sendOrder() {
     if (position.y !== -400) {
       toggleDrawer(position.y);
+      splitButtons();
       return;
     }
 
@@ -255,28 +274,43 @@ export default function Home(props) {
               className="footerContainer flex flex-col items-center py-4 px-4 sm:px-0 max-w-xl w-full fixed left-0 bottom-[-420px] h-[500px] bg-amber-50 z-50"
             >
               <div className="footerHandle w-10 rounded-full bg-amber-300 h-1.5 mb-2 my-[-6px]"></div>
-              <button
-                id="ordine"
-                className="need-interaction font-subtitle bg-amber-500 w-full h-10 py-2 px-4 rounded hover:bg-amber-600 inline-flex flex-row justify-center cursor-pointer"
-                onClick={() => {
-                  sendOrder();
-                }}
+              <div
+                className="w-full flex flex-row justify-end gap-4 relative bg-amber-50"
+                id="button-container"
               >
-                <div>
-                  {loading
-                    ? 'Caricamento...'
-                    : position.y === -400
-                    ? cart.length > 0
-                      ? `Conferma l'ordine`
-                      : 'Ordina'
-                    : 'Ordina'}
-                </div>
-                {cart.length !== 0 && (
-                  <div className="inline-flex items-center justify-center h-4 w-4 ml-1 mt-1 rounded-full bg-red-600 bg-center text-white text-xs">
-                    {cart.length}
+                <button
+                  id="close-button"
+                  className="need-interaction font-subtitle border border-amber-500 h-10 py-2 px-4 rounded hover:border-amber-600 cursor-pointer transition-all duration-300 ease-in-out"
+                  onClick={() => {
+                    toggleDrawer(position.y);
+                    hideButtons();
+                  }}
+                >
+                  Chiudi
+                </button>
+                <button
+                  id="ordine"
+                  className="need-interaction font-subtitle bg-amber-500 w-full h-10 py-2 px-4 rounded hover:bg-amber-600 inline-flex flex-row justify-center cursor-pointer transition-all duration-300 ease-in-out"
+                  onClick={() => {
+                    sendOrder();
+                  }}
+                >
+                  <div>
+                    {loading
+                      ? 'Caricamento...'
+                      : position.y === -400
+                      ? cart.length > 0
+                        ? 'Conferma'
+                        : 'Ordina'
+                      : 'Ordina'}
                   </div>
-                )}
-              </button>
+                  {cart.length !== 0 && (
+                    <div className="inline-flex items-center justify-center h-4 w-4 ml-1 mt-1 rounded-full bg-red-600 bg-center text-white text-xs">
+                      {cart.length}
+                    </div>
+                  )}
+                </button>
+              </div>
               {cart.length > 0 ? (
                 <div className="flex flex-col rounded p-4 bg-amber-100 my-4 w-full">
                   <FoodListCart cart={cart} />

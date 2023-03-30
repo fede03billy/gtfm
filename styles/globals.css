@@ -173,3 +173,12 @@ box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, 
   right: 0;
   top: 112; /* 96 + 16 */
 }
+
+#close-button {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 48%;
+  z-index: -1;
+  opacity: 0;
+}
