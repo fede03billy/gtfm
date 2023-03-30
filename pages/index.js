@@ -81,19 +81,29 @@ export default function Home(props) {
     return total.toFixed(2);
   }
 
+  function toggleDrawer(y) {
+    const newPosition = y === 0 ? -400 : 0;
+    const element = document.getElementById('footer-card');
+    element.style.transition = 'all 0.3s ease-out'; // snap smoothly to the top or bottom
+    setPosition({ y: newPosition });
+    const bg = document.getElementById('darken-bg');
+    bg.classList.toggle('bg-opacity-30');
+    bg.classList.toggle('bg-opacity-0');
+    bg.classList.toggle('pointer-events-none');
+    setTimeout(() => {
+      element.style.transition = 'none';
+    }, 300);
+    if (document.body.style.overflow === 'auto') {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+  }
+
   // function to send the order to the API
   async function sendOrder() {
     if (position.y !== -400) {
-      const element = document.getElementById('footer-card');
-      element.style.transition = 'all 0.3s ease-out'; // snap smoothly to the top or bottom
-      setPosition({ y: -400 });
-      const bg = document.getElementById('darken-bg');
-      bg.classList.add('bg-opacity-30');
-      bg.classList.remove('bg-opacity-0');
-      bg.classList.remove('pointer-events-none');
-      setTimeout(() => {
-        element.style.transition = 'none';
-      }, 300);
+      toggleDrawer(position.y);
       return;
     }
 
@@ -226,17 +236,8 @@ export default function Home(props) {
 
         <div
           id="darken-bg"
-          onClick={(e) => {
-            const element = document.getElementById('footer-card');
-            element.style.transition = 'all 0.3s ease-out'; // snap smoothly to the bottom
-            setPosition({ y: 0 });
-            setTimeout(() => {
-              element.style.transition = 'none';
-            }, 300);
-            e.target.classList.add('bg-opacity-0');
-            e.target.classList.remove('bg-opacity-30');
-            e.target.classList.toggle('pointer-events-none');
-            document.body.style.overflow = 'auto';
+          onClick={() => {
+            toggleDrawer(position.y);
           }}
           className="h-screen w-screen fixed top-0 left-0 bg-black bg-opacity-0 transition pointer-events-none"
         ></div>
