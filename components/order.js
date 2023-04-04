@@ -55,6 +55,9 @@ export default function Order({ order }) {
       </div>
       <div className="border-b border-amber-300 mb-2"></div>
       <FoodListSummary cart={food} />
+      {order.note && (
+        <p className="text-sm text-black opacity-40">Note: {order.note}</p>
+      )}
       <p className="flex justify-between mt-2 font-bold">
         <span>Total:</span>
         <span>{(order.total_price / 100).toFixed(2)} €</span>

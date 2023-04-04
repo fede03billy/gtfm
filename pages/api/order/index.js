@@ -4,7 +4,8 @@ import Order from '../../../models/order.js';
 
 export default async function handler(req, res) {
   // Get the restaurant_id, table_id and cart from the body
-  const { restaurant_id, table_id, cart, user_id, total_price } = req.body;
+  const { restaurant_id, table_id, cart, user_id, total_price, note } =
+    req.body;
 
   if (!restaurant_id || !table_id || !cart || !user_id || !total_price)
     return res.status(400).json({ error: 'Missing parameters' });
@@ -18,6 +19,7 @@ export default async function handler(req, res) {
       ordered_food: cart.map((item) => item._id),
       user_id,
       total_price: total_price * 100,
+      note,
     });
     res.status(200).json({ success: true });
   } catch (error) {
