@@ -36,6 +36,10 @@ const orderSchema = new mongoose.Schema({
     required: true,
     default: false,
   },
+  note: {
+    type: String,
+    required: false,
+  },
   created_at: {
     type: Date,
     required: true,
