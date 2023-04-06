@@ -9,7 +9,7 @@ export default function Add2CartButton(props) {
   const changeCart = useCartUpdate(); // this one has two functions: add2Cart and removeFromCart
 
   return (
-    <div>
+    <div className="add-button">
       <button
         className="bg-amber-300 p-4 rounded hover:bg-amber-400 aspect-square"
         onClick={() => {

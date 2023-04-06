@@ -6,7 +6,7 @@ export default function FoodItem(props) {
   const { item } = props;
 
   return (
-    <div className="flex flex-col justify-center items-center">
+    <div className="food-item flex flex-col justify-center items-center">
       <div className="bg-amber-100 rounded-lg p-4 mt-4 w-full">
         <div className="flex flex-row justify-between items-center">
           <div className="w-3/4">
