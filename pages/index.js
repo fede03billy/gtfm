@@ -245,7 +245,9 @@ export default function Home(props) {
               <div
                 id="restaurantName"
                 className="max-w-[450px] max-h-10 overflow-hidden"
-              >{`${restaurantInfo.name}`}</div>
+              >
+                {restaurantInfo.name}
+              </div>
               {/* <div className="font-medium text-lg">Tavolo {`${table_id}`}</div> */}
               {activeOrder && (
                 <Link href={confirmLink}>
