@@ -197,7 +197,7 @@ export default function Home(props) {
   if (typeof window !== 'undefined' || typeof document !== 'undefined') {
     if (!table_id) {
       const footer = document.getElementsByTagName('footer')[0];
-      footer.style.display = 'none';
+      footer?.classList.add('hidden');
     }
 
     if (document.cookie.includes('gtfm_token')) {
