@@ -195,6 +195,11 @@ export default function Home(props) {
 
   // check if there's a token in the cookie, if not we create a uuid and save it in the cookie, and also in the database as a user
   if (typeof window !== 'undefined' || typeof document !== 'undefined') {
+    if (!table_id) {
+      const footer = document.getElementsByTagName('footer')[0];
+      footer.style.display = 'none';
+    }
+
     if (document.cookie.includes('gtfm_token')) {
       const token = document.cookie
         .split('; ')
@@ -220,8 +225,8 @@ export default function Home(props) {
     }
   }
 
-  // check if there are no restaurant_id and table_if, in that case we will show a 404 page
-  if (!restaurant_id || !table_id) {
+  // check if there are no restaurant_id, in that case we will show a 404 page
+  if (!restaurant_id) {
     return <Error statusCode={404} />;
   }
 
@@ -357,10 +362,14 @@ export async function getServerSideProps(context) {
   let restaurant_id = query.resid;
   let table_id = query.tabid;
 
-  if (!restaurant_id || !table_id) {
+  if (!restaurant_id) {
     return {
       props: {},
     };
+  }
+
+  if (!table_id) {
+    table_id = null;
   }
 
   // Get the data from the API
