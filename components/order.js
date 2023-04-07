@@ -24,7 +24,7 @@ export default function Order({ order }) {
 
   useEffect(() => {
     getFood(order.ordered_food);
-  }, []); // i'm using a useEffect to avoid multiple running of the function, but there must be a better way to do it
+  }, []);
 
   return (
     <div className="bg-white bg-opacity-40 backdrop-blur-lg p-4 my-4 shadow rounded">
