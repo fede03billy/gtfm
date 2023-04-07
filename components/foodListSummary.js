@@ -2,9 +2,7 @@
 // Path: components/foodList.js
 import FoodItemSummary from './foodItemSummary.js';
 
-export default function FoodListSummary(props) {
-  const { cart } = props;
-
+export default function FoodListSummary({ cart }) {
   // function to modify the cart array to add the quantity of each item and removing the duplicates
   function prepareCart(cart) {
     const modifiedCart = [];
