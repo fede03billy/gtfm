@@ -11,7 +11,7 @@ export default function Add2CartButton(props) {
   return (
     <div className="add-button">
       <button
-        className="bg-amber-300 p-4 rounded hover:bg-amber-400 aspect-square"
+        className="backdrop-blur-lg bg-white bg-opacity-50 p-4 rounded hover:bg-opacity-70 aspect-square"
         onClick={() => {
           changeCart.add2Cart(item);
         }}

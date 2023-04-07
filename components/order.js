@@ -27,7 +27,7 @@ export default function Order({ order }) {
   }, []); // i'm using a useEffect to avoid multiple running of the function, but there must be a better way to do it
 
   return (
-    <div className="bg-amber-100 p-4 my-4 rounded">
+    <div className="bg-white bg-opacity-40 backdrop-blur-lg p-4 my-4 shadow rounded">
       <div className="flex justify-between mb-2 text-right">
         <h1 className="text-xl font-bold">Il tuo ordine</h1>
         <div className="text-xs">
@@ -53,7 +53,7 @@ export default function Order({ order }) {
           </p>
         </div>
       </div>
-      <div className="border-b border-amber-300 mb-2"></div>
+      <div className="border-b border-black border-opacity-20 my-4"></div>
       <FoodListSummary cart={food} />
       {order.note && (
         <p className="text-sm text-black opacity-40">Note: {order.note}</p>

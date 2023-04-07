@@ -68,7 +68,7 @@ export default function Waiter() {
   }
 
   return (
-    <div className="flex justify-center bg-amber-50">
+    <div className="flex justify-center">
       <div className="flex flex-col h-[90vh] w-screen max-w-xl font-serif p-4 mb-[70px]">
         <div>
           <div className="flex flex-row w-full justify-center">
@@ -83,19 +83,19 @@ export default function Waiter() {
 
         <footer
           id="footer-buttons"
-          className="fixed bottom-0 left-0 w-full flex flex-row justify-center align-center bg-amber-50 "
+          className="fixed bottom-0 left-0 w-full flex flex-row justify-center align-center bg-white bg-opacity-30 backdrop-blur-lg"
         >
           <div className="footerContainer flex flex-row py-4 px-4 sm:px-0 max-w-xl w-full">
             <button
               onClick={redirectToHome}
-              className="bg-amber-500 py-2 px-4 rounded hover:bg-amber-600 grow mr-4 font-subtitle"
+              className="bg-white shadow bg-opacity-50 backdrop-blur-lg py-2 px-4 rounded hover:bg-opacity-70 grow mr-4 font-subtitle"
               disabled={loading}
             >
               {loading ? 'Caricamento...' : 'Fai un nuovo ordine'}
             </button>
             {/* button to pay the bill */}
             <button
-              className="bg-amber-500 py-2 px-4 rounded grow opacity-30 font-subtitle"
+              className="bg-white shadow bg-opacity-30 backdrop-blur-lg py-2 px-4 rounded grow opacity-30 font-subtitle"
               disabled
               //onClick={window.alert('TODO: pay the bill')}
             >

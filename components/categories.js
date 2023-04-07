@@ -33,7 +33,7 @@ export default function Categories(props) {
     <div className="categories scrollbar-hide flex w-100 overflow-x-auto overflow-hidden scroll-smooth h-10 whitespace-nowrap mr-[-16px]">
       {Array.from(categories).map((item, index) => (
         <button
-          className="category bg-amber-50 py-2 px-4 hover:bg-amber-100 border-amber-600"
+          className="category bg-transparent py-2 px-4 hover:bg-white hover:bg-opacity-50 border-black"
           onClick={() => {
             changeCategory(item);
           }}
