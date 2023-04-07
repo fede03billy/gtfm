@@ -69,7 +69,7 @@ export default function Waiter() {
 
   return (
     <div className="flex justify-center">
-      <div className="flex flex-col h-[90vh] w-screen max-w-xl font-serif p-4 mb-[70px]">
+      <div className="flex flex-col h-full min-h-screen w-screen max-w-xl font-serif p-4 mb-[70px]">
         <div>
           <div className="flex flex-row w-full justify-center">
             <img
