@@ -41,12 +41,12 @@ test.describe('Home Page', () => {
       await page.locator('.add-button').first().click();
       await page
         .locator(
-          'div:nth-child(2) > .bg-amber-100 > div > .w-1\\/4 > .add-button > .bg-amber-300'
+          'div:nth-child(2) > .backdrop-blur-4xl > div > .w-1\\/4 > .add-button > .backdrop-blur-lg'
         )
         .click();
       await page
         .locator(
-          'div:nth-child(3) > .bg-amber-100 > div > .w-1\\/4 > .add-button > .bg-amber-300'
+          'div:nth-child(3) > .backdrop-blur-4xl > div > .w-1\\/4 > .add-button > .backdrop-blur-lg'
         )
         .click();
 
