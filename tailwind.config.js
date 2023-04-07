@@ -9,8 +9,7 @@ module.exports = {
   },
   theme: {
     fontFamily: {
-      poppins: ['Poppins', 'sans-serif'],
-      isra: ['Isra', 'sans-serif'],
+      helvetica: ['Helvetica', 'sans-serif'],
     },
     extend: {},
   },
