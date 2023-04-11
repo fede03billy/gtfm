@@ -79,7 +79,7 @@ export default function FoodList(props) {
         }
       }).length === 0 && (
         <p className="text-md text-black opacity-30 mt-[40vh] w-full text-center font-thin">
-          Non c'è nulla in questa categoria.
+          Non c&apos;è nulla in questa categoria.
         </p>
       )}
     </div>
