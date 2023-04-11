@@ -344,7 +344,7 @@ export default function Home(props) {
                   </div>
                 </div>
               ) : (
-                <div className="text-black opacity-30 mt-52 text-sm">
+                <div className="text-black opacity-30 mt-52 text-sm font-thin">
                   Non c&apos;è nulla nel tuo carrello.
                 </div>
               )}
