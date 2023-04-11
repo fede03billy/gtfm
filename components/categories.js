@@ -16,6 +16,11 @@ export default function Categories(props) {
     categories.add(item.category);
   });
 
+  // Add 3 categories at the end of the set for "lactose free", "gluten free" and "vegan"
+  categories.add('Senza lattosio');
+  categories.add('Senza glutine');
+  categories.add('Vegano');
+
   useEffect(() => {
     // add a class to the selected category
     const buttons = document.getElementsByClassName('category');
